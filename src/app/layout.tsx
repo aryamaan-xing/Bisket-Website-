@@ -10,16 +10,21 @@ const raleway = Raleway({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bisketlabs.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bisket-labs-website.vercel.app";
+
+const title = "Bisket Labs — Electronics, engineered from biomass";
+const description =
+  "Bio-based PCB substrates from agricultural biomass — built for real electronics manufacturing. Partner with Bisket Labs.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Bisket Labs — Electronics, engineered from biomass",
+    default: title,
     template: "%s · Bisket Labs",
   },
-  description:
-    "Bio-based PCB substrates from agricultural biomass — built for real electronics manufacturing. Partner with Bisket Labs.",
+  description,
+  applicationName: "Bisket Labs",
   keywords: [
     "bio-based PCB substrate",
     "sustainable PCB laminate",
@@ -27,22 +32,37 @@ export const metadata: Metadata = {
     "FR-4 alternative",
     "Bisket Labs",
   ],
+  icons: {
+    icon: [
+      { url: "/icon.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/icon.png"],
+  },
   openGraph: {
-    title: "Bisket Labs — Electronics, engineered from biomass",
-    description:
-      "Bio-based PCB substrates from agricultural biomass — built for real electronics manufacturing.",
+    title,
+    description,
+    url: siteUrl,
+    siteName: "Bisket Labs",
+    locale: "en_IN",
     type: "website",
-    images: [{ url: "/images/hero-biomass-pcb.png" }],
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Bisket Labs — Electronics, engineered from biomass",
+        type: "image/png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bisket Labs — Electronics, engineered from biomass",
-    description:
-      "Bio-based PCB substrates from agricultural biomass — built for real electronics manufacturing.",
-    images: ["/images/hero-biomass-pcb.png"],
-  },
-  icons: {
-    icon: "/icon.png",
+    title,
+    description,
+    images: ["/og.png"],
   },
 };
 
