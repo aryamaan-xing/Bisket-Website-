@@ -91,7 +91,11 @@ export function ContactForm() {
 
       {status === "error" ? (
         <p className="mt-4 text-sm text-purple">
-          Something went wrong. Email us directly at bisket.innovation@gmail.com.
+          Couldn&apos;t send just now. Email us directly at{" "}
+          <a href="mailto:bisket.innovation@gmail.com" className="underline">
+            bisket.innovation@gmail.com
+          </a>
+          .
         </p>
       ) : null}
 
