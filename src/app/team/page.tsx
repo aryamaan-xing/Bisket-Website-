@@ -30,6 +30,8 @@ const team = [
 
 export const metadata = {
   title: "Our team",
+  description:
+    "Meet the Bisket Labs team building bio-based electronic substrates from agricultural biomass.",
 };
 
 export default function TeamPage() {

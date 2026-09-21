@@ -100,7 +100,8 @@ function Hero({ reduce }: { reduce: boolean }) {
             Electronics, engineered from biomass.
           </h1>
           <p className="mt-5 max-w-md text-base font-light leading-relaxed text-beige/80 md:text-lg">
-            Bio-based PCB substrates for real electronics manufacturing.
+            Bio-based PCB substrates from agricultural biomass — built for real
+            electronics manufacturing.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/contact">Partner with us</ButtonLink>

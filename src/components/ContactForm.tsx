@@ -6,7 +6,6 @@ const roles = [
   "Investor",
   "OEM",
   "PCB manufacturer",
-  "Research / ecosystem",
   "Other",
 ] as const;
 

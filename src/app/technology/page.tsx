@@ -19,6 +19,8 @@ const moments = [
 
 export const metadata = {
   title: "Our technology",
+  description:
+    "From biomass to circuit board — bio-based PCB substrates engineered for real electronics manufacturing.",
 };
 
 export default function TechnologyPage() {
@@ -102,6 +104,54 @@ export default function TechnologyPage() {
               <Reveal key={m.title} delay={i * 0.06}>
                 <h3 className="text-lg font-semibold text-forest">{m.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-forest/70">{m.line}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-beige">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
+          <Reveal>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple">
+              Prototypes
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-forest md:text-3xl">
+              Boards that already run.
+            </h2>
+          </Reveal>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                src: "/images/product-pcb-board.png",
+                caption: "Single-layer bio-based PCB",
+              },
+              {
+                src: "/images/prototype-led.png",
+                caption: "LED / thermal demo",
+              },
+              {
+                src: "/images/prototype-sensor.png",
+                caption: "Sensor board",
+              },
+              {
+                src: "/images/product-working-electronics.png",
+                caption: "Working electronics",
+              },
+            ].map((item, i) => (
+              <Reveal key={item.caption} delay={i * 0.05}>
+                <figure>
+                  <div className="relative aspect-square overflow-hidden bg-forest">
+                    <Image
+                      src={item.src}
+                      alt={item.caption}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 25vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <figcaption className="mt-3 text-sm text-forest/70">{item.caption}</figcaption>
+                </figure>
               </Reveal>
             ))}
           </div>

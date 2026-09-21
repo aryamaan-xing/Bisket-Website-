@@ -3,6 +3,8 @@ import { Reveal } from "@/components/Reveal";
 
 export const metadata = {
   title: "Contact us",
+  description:
+    "Investors, OEMs, and partners — start a conversation with Bisket Labs.",
 };
 
 export default function ContactPage() {
@@ -53,6 +55,10 @@ export default function ContactPage() {
 
         <Reveal delay={0.08}>
           <ContactForm />
+          <p className="mt-4 text-xs text-forest/50">
+            By submitting, you agree we may contact you about your enquiry. We do not
+            publish a public datasheet — technical materials are shared privately.
+          </p>
         </Reveal>
       </div>
     </section>
