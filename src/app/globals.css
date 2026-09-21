@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  /* Primary — from Bisket logo */
+  --lime: #b4f01b;
+  --lime-deep: #8fc412;
+  --ink: #0c0c0c;
+
+  /* Secondary */
+  --beige: #f0ebe1;
+  --beige-deep: #e4dccf;
+  --forest: #142e24;
+  --forest-mid: #1f4536;
+  --purple: #5c3d6e;
+  --purple-soft: #7a568f;
+
+  --background: var(--beige);
+  --foreground: var(--forest);
+  --muted: color-mix(in srgb, var(--forest) 62%, transparent);
+  --surface: color-mix(in srgb, white 55%, var(--beige));
+  --ring: color-mix(in srgb, var(--lime) 70%, var(--forest));
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-lime: var(--lime);
+  --color-lime-deep: var(--lime-deep);
+  --color-ink: var(--ink);
+  --color-beige: var(--beige);
+  --color-beige-deep: var(--beige-deep);
+  --color-forest: var(--forest);
+  --color-forest-mid: var(--forest-mid);
+  --color-purple: var(--purple);
+  --color-purple-soft: var(--purple-soft);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --font-sans: var(--font-raleway);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-raleway), "Raleway", sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--lime) 70%, transparent);
+  color: var(--ink);
+}
+
+/* Atmospheric grain for depth without flat fills */
+.bg-grain {
+  position: relative;
+  isolation: isolate;
+}
+
+.bg-grain::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.hero-mesh {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, color-mix(in srgb, var(--lime) 35%, transparent), transparent 55%),
+    radial-gradient(ellipse 50% 70% at 15% 80%, color-mix(in srgb, var(--purple) 28%, transparent), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 90% 90%, color-mix(in srgb, var(--forest-mid) 40%, transparent), transparent 45%),
+    linear-gradient(160deg, var(--forest) 0%, #0d241c 45%, #1a1530 100%);
+}
+
+.section-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--forest) 18%, transparent),
+    color-mix(in srgb, var(--purple) 35%, transparent),
+    color-mix(in srgb, var(--forest) 18%, transparent),
+    transparent
+  );
+}
