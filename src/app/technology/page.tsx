@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Reveal } from "@/components/Reveal";
 
@@ -23,9 +24,16 @@ export const metadata = {
 export default function TechnologyPage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-forest text-beige">
-        <div className="absolute inset-0 hero-mesh opacity-80" />
-        <div className="absolute inset-0 bg-grain" />
+      <section className="relative min-h-[60svh] overflow-hidden bg-forest text-beige">
+        <Image
+          src="/images/product-resin-laminate.png"
+          alt="Bio-based resin and laminate"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-55"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-forest via-forest/85 to-forest/50" />
         <div className="relative z-10 mx-auto max-w-6xl px-5 py-24 md:px-8 md:py-32">
           <Reveal>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-lime">
@@ -63,16 +71,25 @@ export default function TechnologyPage() {
               </li>
             </ul>
           </Reveal>
-          <Reveal delay={0.08} className="flex flex-col justify-center bg-forest px-8 py-10 text-beige">
-            <p className="text-sm font-medium uppercase tracking-[0.18em] text-lime">
-              Technical depth
-            </p>
-            <p className="mt-4 text-lg font-light leading-relaxed text-beige/85">
-              Material data is shared privately with partners evaluating qualification
-              and deployment — not published as a public datasheet.
-            </p>
-            <div className="mt-8">
-              <ButtonLink href="/contact">Request a technical conversation</ButtonLink>
+          <Reveal delay={0.08} className="relative min-h-[280px] overflow-hidden">
+            <Image
+              src="/images/product-pcb-board.png"
+              alt="Bisket bio-based PCB prototype"
+              fill
+              sizes="(max-width: 768px) 100vw, 40vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-forest via-forest/40 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-8 text-beige">
+              <p className="text-sm font-medium uppercase tracking-[0.18em] text-lime">
+                Technical depth
+              </p>
+              <p className="mt-3 text-sm font-light leading-relaxed text-beige/85">
+                Material data is shared privately — not published as a public datasheet.
+              </p>
+              <div className="mt-5">
+                <ButtonLink href="/contact">Request a technical conversation</ButtonLink>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -91,10 +108,18 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      <section className="bg-beige">
-        <div className="mx-auto max-w-6xl px-5 py-16 text-center md:px-8 md:py-20">
+      <section className="relative overflow-hidden bg-forest">
+        <Image
+          src="/images/product-working-electronics.png"
+          alt="Working electronics on bio-based substrate"
+          fill
+          sizes="100vw"
+          className="object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-forest/70" />
+        <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 text-center md:px-8 md:py-20">
           <Reveal>
-            <p className="mx-auto max-w-lg text-base text-forest/70">
+            <p className="mx-auto max-w-lg text-base text-beige/80">
               Evaluating with OEMs across practical electronics — ask us where it fits
               your product.
             </p>
