@@ -23,9 +23,9 @@ export function Header() {
           <Image
             src="/logo.png"
             alt="Bisket Labs"
-            width={160}
-            height={53}
-            className="h-9 w-auto md:h-10"
+            width={200}
+            height={30}
+            className="h-8 w-auto md:h-9"
             priority
           />
         </Link>

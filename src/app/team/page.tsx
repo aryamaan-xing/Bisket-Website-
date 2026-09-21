@@ -38,7 +38,7 @@ export default function TeamPage() {
       <section className="bg-beige">
         <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
           <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-soft">
               Our team
             </p>
             <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-forest md:text-5xl">

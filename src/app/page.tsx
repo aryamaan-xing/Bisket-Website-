@@ -23,11 +23,11 @@ export default function HomePage() {
         <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4.25rem)] max-w-6xl flex-col justify-end px-5 pb-14 pt-24 md:justify-center md:px-8 md:pb-20 md:pt-16">
           <div className="max-w-xl">
             <Image
-              src="/logo.png"
+              src="/logo-light.png"
               alt="Bisket Labs"
               width={280}
-              height={93}
-              className="mb-8 h-12 w-auto brightness-0 invert md:h-14"
+              height={42}
+              className="mb-8 h-10 w-auto md:h-12"
               priority
             />
             <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight text-beige md:text-5xl lg:text-6xl">
