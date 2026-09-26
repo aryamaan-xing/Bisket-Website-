@@ -729,7 +729,7 @@ export function StoryWorld({
         <>
           <Html position={[-1.18, 1.15, 0.2]} center zIndexRange={[12, 8]} pointerEvents="none">
             <div
-              className={`bg-ink/80 px-2.5 py-1 text-[11px] font-semibold tracking-[0.16em] text-beige/70 uppercase ${showSplit ? "opacity-100" : "opacity-0"}`}
+              className={`bg-ink/80 px-2.5 py-1 text-[11px] font-semibold tracking-[0.16em] whitespace-nowrap text-beige/70 uppercase ${showSplit ? "opacity-100" : "opacity-0"}`}
             >
               FR-4
             </div>
