@@ -31,7 +31,7 @@ const team = [
 export const metadata = {
   title: "Our team",
   description:
-    "Meet the IIT Madras spinout team behind Bisket Labs' bio-based single-layer PCB laminate.",
+    "Meet the IIT Madras spinout team behind Bisket Labs' bio-based PCB laminate.",
 };
 
 export default function TeamPage() {

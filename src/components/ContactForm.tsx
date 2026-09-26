@@ -85,7 +85,7 @@ export function ContactForm() {
           required
           rows={4}
           className="mt-2 w-full resize-y border border-forest/15 bg-beige px-3 py-3 text-sm text-forest outline-none focus:border-purple"
-          placeholder="What are you building, and where could a bio-based single-layer board fit?"
+          placeholder="What are you building, and where could a bio-based laminate fit?"
         />
       </label>
 

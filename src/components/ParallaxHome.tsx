@@ -10,6 +10,8 @@ import {
 } from "framer-motion";
 import { useRef } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ShiftInfographic } from "@/components/ShiftInfographic";
+import { HomeSpecs, ImpactCards } from "@/components/HomeSections";
 
 const recognition = [
   "K-Tech Elevate",
@@ -47,7 +49,9 @@ export function ParallaxHome() {
         align="right"
         accent="purple"
       />
+      <ImpactCards />
       <Transformation reduce={!!reduce} />
+      <HomeSpecs />
       <ProductReveal reduce={!!reduce} />
       <Proof />
       <ClosingCta />
@@ -97,12 +101,12 @@ function Hero({ reduce }: { reduce: boolean }) {
             priority
           />
           <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight text-beige md:text-5xl lg:text-6xl">
-            Single-layer PCBs, made from crop residue.
+            Circuit boards, made from crop residue.
           </h1>
           <p className="mt-5 max-w-md text-base font-light leading-relaxed text-beige/80 md:text-lg">
-            A bio-based, UL94 V-0 PCB laminate for low-power electronics — toys and
-            STEM kits, medical disposables, IoT — with a controlled end-of-life. An
-            IIT Madras spinout.
+            A bio-based PCB laminate platform: halogen-free UL94 V-0, no glass fibre,
+            lighter than FR-4 and designed for a controlled end-of-life. An IIT Madras
+            spinout.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/contact">Evaluate for your board</ButtonLink>
@@ -194,7 +198,7 @@ function Transformation({ reduce }: { reduce: boolean }) {
   });
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [-80, 80]);
   const boardY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [60, -60]);
-  const opacity = useTransform(scrollYProgress, [0.1, 0.35, 0.7], [0.4, 1, 1]);
+  const opacity = useTransform(scrollYProgress, [0.1, 0.35, 0.7], reduce ? [1, 1, 1] : [0.4, 1, 1]);
 
   return (
     <section ref={ref} className="relative overflow-hidden bg-beige py-24 md:py-32">
@@ -206,19 +210,12 @@ function Transformation({ reduce }: { reduce: boolean }) {
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-forest md:text-4xl">
             We turn crop residue into a PCB laminate built for end-of-life.
           </h2>
-          <ol className="mt-10 space-y-4">
-            {["Crop residue", "Bio-resin", "Laminate", "Working board"].map((step, i) => (
-              <li key={step} className="flex items-center gap-4">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-forest text-xs font-semibold text-lime">
-                  {i + 1}
-                </span>
-                <span className="text-sm font-medium tracking-wide text-forest">{step}</span>
-                {i < 3 ? (
-                  <span className="hidden h-px flex-1 bg-gradient-to-r from-lime via-purple-soft to-transparent sm:block" />
-                ) : null}
-              </li>
-            ))}
-          </ol>
+          <p className="mt-6 max-w-md text-base leading-relaxed text-forest/70">
+            Conventional FR-4 is fossil epoxy on woven glass fibre, and it has no good
+            way back. Bisket replaces both with a lignocellulosic bio-resin from
+            agricultural residue, so the board is designed for a controlled end-of-life
+            from the start.
+          </p>
         </motion.div>
 
         <div className="relative aspect-[4/3] overflow-hidden">
@@ -244,6 +241,9 @@ function Transformation({ reduce }: { reduce: boolean }) {
             />
           </motion.div>
         </div>
+      </div>
+      <div className="mx-auto mt-14 max-w-6xl px-5 md:mt-20 md:px-8">
+        <ShiftInfographic />
       </div>
     </section>
   );
@@ -279,7 +279,8 @@ function ProductReveal({ reduce }: { reduce: boolean }) {
           From lab resin to working boards.
         </h2>
         <p className="mt-4 max-w-md text-sm font-light text-beige/75 md:text-base">
-          Single-layer boards demonstrated and running real circuits, processed with PCB
+          Available now: single-layer boards for low-power electronics — toys and STEM
+          kits, medical disposables, IoT. Multilayer in development. Processed with PCB
           fabrication partners in Bengaluru and Chennai.
         </p>
       </div>
@@ -303,8 +304,8 @@ function Proof() {
           ))}
         </div>
         <p className="mt-10 inline-flex items-center gap-3 border-l-2 border-purple-soft pl-4 text-sm text-beige/70">
-          <span className="font-semibold text-lime">UL94 V-0</span>
-          flame rating · Tg 262 °C · ~84% organic by volume
+          <span className="font-semibold text-lime">IIT Madras</span>
+          spinout · Developed and processed in India
         </p>
       </div>
     </section>
@@ -321,7 +322,7 @@ function ClosingCta() {
           </p>
           <p className="mt-3 text-2xl font-semibold text-forest">Bengaluru · Chennai</p>
           <p className="mt-3 max-w-sm text-sm text-forest/65">
-            Building toys, STEM kits, medical disposables or IoT devices? Let&apos;s qualify your next board together.
+            OEMs, PCB manufacturers and investors — let&apos;s qualify your next board on biomass together.
           </p>
         </div>
         <ButtonLink href="/contact">Start an evaluation</ButtonLink>
