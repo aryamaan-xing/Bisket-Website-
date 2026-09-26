@@ -4,10 +4,10 @@ import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-mot
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
-import { STORY_BEATS, STORY_CTA, STORY_NOTE } from "@/components/story/copy";
+import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA, STORY_NOTE } from "@/components/story/copy";
 import { FrameArt } from "@/components/story/StoryFrames";
 import { StoryFallback } from "@/components/story/StoryFallback";
-import { copyIndex } from "@/components/story/timeline";
+import { copyIndex, proofIndex } from "@/components/story/timeline";
 
 const StoryCanvas = dynamic(
   () => import("@/components/story/StoryCanvas").then((mod) => mod.StoryCanvas),
@@ -27,6 +27,7 @@ export function StorySection() {
   const ref = useRef<HTMLElement>(null);
   const progressRef = useRef(0);
   const [beat, setBeat] = useState(0);
+  const [proof, setProof] = useState(-1);
   const [webgl, setWebgl] = useState(false);
   const [near, setNear] = useState(false);
   const [ready, setReady] = useState(false);
@@ -40,6 +41,8 @@ export function StorySection() {
     progressRef.current = value;
     const next = copyIndex(value);
     setBeat((current) => (current === next ? current : next));
+    const nextProof = proofIndex(value);
+    setProof((current) => (current === nextProof ? current : nextProof));
   });
 
   useEffect(() => {
@@ -113,6 +116,18 @@ export function StorySection() {
               <span className="text-beige/35"> / 09</span>
             </p>
           </div>
+
+          {proof >= 0 ? (
+            <div
+              key={proof}
+              className="story-orbit pointer-events-none absolute top-[42%] left-1/2 z-20"
+              style={{ animationDelay: `${-proof * 2.6}s` }}
+            >
+              <p className="border-l-2 border-lime bg-forest/90 px-3 py-2 text-sm font-semibold whitespace-nowrap text-beige shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
+                {PROOF_CALLOUTS[proof]}
+              </p>
+            </div>
+          ) : null}
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-6 pb-10 md:px-12 md:pb-14">
             <div key={beat} className="max-w-xl">

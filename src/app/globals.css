@@ -110,6 +110,19 @@ html.story-force-static .story-static {
   display: block;
 }
 
+@keyframes story-orbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg) translateX(156px) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg) translateX(156px) rotate(-360deg);
+  }
+}
+
+.story-orbit {
+  animation: story-orbit 13s linear infinite;
+}
+
 .section-rule {
   height: 1px;
   background: linear-gradient(

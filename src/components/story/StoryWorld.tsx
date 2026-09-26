@@ -4,13 +4,11 @@ import { Html, RoundedBox } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
 import * as THREE from "three";
-import { PROOF_CALLOUTS } from "@/components/story/copy";
 import { lerp, seeded, smoothstep } from "@/components/story/math";
 import {
   boardOpacity,
   etchAmount,
   ledAmount,
-  proofIndex,
   seatedAmount,
   storyTime,
 } from "@/components/story/timeline";
@@ -182,37 +180,6 @@ function fadeTree(root: THREE.Object3D | null, opacity: number) {
   });
 }
 
-function Callout({ progressRef }: { progressRef: RefObject<number> }) {
-  const group = useRef<THREE.Group>(null);
-  const indexRef = useRef(-1);
-  const [index, setIndex] = useState(-1);
-
-  useFrame(({ clock }) => {
-    const next = proofIndex(progressRef.current);
-    if (next !== indexRef.current) {
-      indexRef.current = next;
-      setIndex(next);
-    }
-    const node = group.current;
-    if (!node) return;
-    node.visible = next >= 0;
-    const ang = clock.elapsedTime * 0.55 + Math.max(0, next) * ((Math.PI * 2) / 5);
-    node.position.set(Math.cos(ang) * 1.15, 0.55 + Math.sin(ang * 2) * 0.06, Math.sin(ang) * 0.85);
-  });
-
-  return (
-    <group ref={group} visible={false}>
-      <Html center zIndexRange={[12, 8]} pointerEvents="none" style={{ pointerEvents: "none" }}>
-        {index >= 0 ? (
-          <div className="border-l-2 border-lime bg-forest/90 px-3 py-2 text-sm font-semibold whitespace-nowrap text-beige shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
-            {PROOF_CALLOUTS[index]}
-          </div>
-        ) : null}
-      </Html>
-    </group>
-  );
-}
-
 export function StoryWorld({
   progressRef,
   onReady,
@@ -322,6 +289,7 @@ export function StoryWorld({
   const warmRef = useRef<THREE.DirectionalLight>(null);
   const splitRef = useRef(false);
   const [showSplit, setShowSplit] = useState(false);
+  const [labelsReady, setLabelsReady] = useState(false);
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const bgColor = useMemo(() => new THREE.Color(), []);
 
@@ -573,6 +541,7 @@ export function StoryWorld({
     if (!readyOnce.current) {
       readyOnce.current = true;
       onReadyRef.current();
+      setLabelsReady(true);
     }
   });
 
@@ -756,15 +725,19 @@ export function StoryWorld({
         </mesh>
       </group>
 
-      {showSplit ? (
+      {labelsReady ? (
         <>
           <Html position={[-1.18, 1.15, 0.2]} center zIndexRange={[12, 8]} pointerEvents="none">
-            <div className="bg-ink/80 px-2.5 py-1 text-[11px] font-semibold tracking-[0.16em] text-beige/70 uppercase">
+            <div
+              className={`bg-ink/80 px-2.5 py-1 text-[11px] font-semibold tracking-[0.16em] text-beige/70 uppercase ${showSplit ? "opacity-100" : "opacity-0"}`}
+            >
               FR-4
             </div>
           </Html>
           <Html position={[1.12, 1.05, 0.2]} center zIndexRange={[12, 8]} pointerEvents="none">
-            <div className="border border-lime/40 bg-forest/85 px-2.5 py-1 text-[11px] font-semibold tracking-[0.16em] text-lime uppercase">
+            <div
+              className={`border border-lime/40 bg-forest/85 px-2.5 py-1 text-[11px] font-semibold tracking-[0.16em] text-lime uppercase ${showSplit ? "opacity-100" : "opacity-0"}`}
+            >
               Bisket
             </div>
           </Html>
@@ -819,7 +792,6 @@ export function StoryWorld({
         </mesh>
       </group>
 
-      <Callout progressRef={progressRef} />
     </>
   );
 }
