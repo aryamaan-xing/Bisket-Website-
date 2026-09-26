@@ -19,6 +19,7 @@ const recognition = [
   "C-CAMP",
   "NIDHI PRAYAS",
   "Carbon Zero Challenge",
+  "CSIR-NEERI",
 ];
 
 function useParallax(value: MotionValue<number>, distance: number) {
@@ -105,8 +106,8 @@ function Hero({ reduce }: { reduce: boolean }) {
           </h1>
           <p className="mt-5 max-w-md text-base font-light leading-relaxed text-beige/80 md:text-lg">
             A bio-based PCB laminate platform: halogen-free UL94 V-0, no glass fibre,
-            lighter than FR-4 and designed for a controlled end-of-life. An IIT Madras
-            spinout.
+            lighter than FR-4 and designed for a controlled end-of-life. Founded by IIT
+            Madras and NUS alumni.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/contact">Evaluate for your board</ButtonLink>
@@ -296,16 +297,16 @@ function Proof() {
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-lime">
           Recognised by
         </p>
-        <div className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+        <div className="mt-8 flex flex-wrap gap-3">
           {recognition.map((name) => (
-            <span key={name} className="text-sm font-medium tracking-wide text-beige/85 md:text-base">
+            <span key={name} className="border border-beige/20 px-3 py-1.5 text-sm font-medium tracking-wide text-beige/85 md:text-base">
               {name}
             </span>
           ))}
         </div>
         <p className="mt-10 inline-flex items-center gap-3 border-l-2 border-purple-soft pl-4 text-sm text-beige/70">
-          <span className="font-semibold text-lime">IIT Madras</span>
-          spinout · Developed and processed in India
+          <span className="shrink-0 whitespace-nowrap font-semibold text-lime">Made in India</span>
+          Founded by IIT Madras and NUS alumni
         </p>
       </div>
     </section>

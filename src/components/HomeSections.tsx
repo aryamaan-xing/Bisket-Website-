@@ -23,7 +23,7 @@ const impact = [
   },
   {
     title: "Made in India",
-    body: "Invented at IIT Madras, made from Indian agricultural feedstock, and processed with PCB fabrication partners in Bengaluru and Chennai.",
+    body: "Made from Indian agricultural feedstock and processed with PCB fabrication partners in Bengaluru and Chennai, building a domestic supply chain for PCB laminates.",
   },
 ];
 

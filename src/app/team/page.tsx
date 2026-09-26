@@ -31,7 +31,7 @@ const team = [
 export const metadata = {
   title: "Our team",
   description:
-    "Meet the IIT Madras spinout team behind Bisket Labs' bio-based PCB laminate.",
+    "Meet the team behind Bisket Labs' bio-based PCB laminate. Our founding team are IIT Madras and NUS alumni.",
 };
 
 export default function TeamPage() {
@@ -46,6 +46,9 @@ export default function TeamPage() {
             <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-forest md:text-5xl">
               The team turning crop residue into circuit boards.
             </h1>
+            <p className="mt-5 max-w-xl text-base font-light leading-relaxed text-forest/70">
+              Our founding team are IIT Madras and NUS alumni.
+            </p>
           </Reveal>
 
           <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">

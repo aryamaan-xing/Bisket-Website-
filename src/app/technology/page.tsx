@@ -21,7 +21,7 @@ const moments = [
 export const metadata = {
   title: "Our technology",
   description:
-    "A lignocellulosic, halogen-free UL94 V-0 PCB laminate from crop residue: Tg 262 °C, lighter and tougher than FR-4, designed for a controlled end-of-life. Developed at IIT Madras.",
+    "A lignocellulosic, halogen-free UL94 V-0 PCB laminate from crop residue: Tg 262 °C, lighter and tougher than FR-4, designed for a controlled end-of-life.",
 };
 
 export default function TechnologyPage() {
@@ -46,7 +46,7 @@ export default function TechnologyPage() {
               From biomass to circuit board.
             </h1>
             <p className="mt-6 max-w-xl text-base font-light leading-relaxed text-beige/75 md:text-lg">
-              An IIT Madras spinout. Our proprietary lignocellulosic resin turns
+              Our proprietary lignocellulosic resin turns
               agricultural residue into a glass-free PCB laminate — about 84% organic by
               volume, with a controlled end-of-life.
             </p>

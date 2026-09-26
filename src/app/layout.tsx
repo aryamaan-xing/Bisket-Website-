@@ -15,7 +15,7 @@ const siteUrl =
 
 const title = "Bisket Labs — Circuit boards, made from crop residue";
 const description =
-  "Bisket Labs, an IIT Madras spinout, makes a bio-based PCB laminate platform from crop residue: halogen-free UL94 V-0, no glass fibre, lighter than FR-4, designed for a controlled end-of-life.";
+  "Bisket Labs makes a bio-based PCB laminate platform from crop residue: halogen-free UL94 V-0, no glass fibre, lighter than FR-4, designed for a controlled end-of-life. Founded by IIT Madras and NUS alumni.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
