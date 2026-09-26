@@ -12,6 +12,7 @@ import { useRef } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ShiftInfographic } from "@/components/ShiftInfographic";
 import { HomeSpecs, ImpactCards } from "@/components/HomeSections";
+import { StorySection } from "@/components/story/StorySection";
 
 const recognition = [
   "K-Tech Elevate",
@@ -32,6 +33,7 @@ export function ParallaxHome() {
   return (
     <div className="bg-beige">
       <Hero reduce={!!reduce} />
+      <StorySection />
       <ImpactChapter
         reduce={!!reduce}
         eyebrow="Impact"

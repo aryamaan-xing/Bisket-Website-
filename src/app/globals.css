@@ -83,6 +83,33 @@ body {
     linear-gradient(160deg, var(--forest) 0%, #0d241c 45%, #1a1530 100%);
 }
 
+/* Scroll story: WebGL on large screens that allow motion; static frames otherwise. */
+.story-scroll {
+  display: none;
+}
+
+.story-static {
+  display: block;
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .story-scroll {
+    display: block;
+  }
+
+  .story-static {
+    display: none;
+  }
+}
+
+html.story-force-static .story-scroll {
+  display: none;
+}
+
+html.story-force-static .story-static {
+  display: block;
+}
+
 .section-rule {
   height: 1px;
   background: linear-gradient(
