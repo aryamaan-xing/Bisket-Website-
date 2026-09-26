@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 
 const roles = [
   "Investor",
-  "OEM",
+  "OEM / product team",
   "PCB manufacturer",
   "Other",
 ] as const;
@@ -40,7 +40,7 @@ export function ContactForm() {
         </p>
         <h2 className="mt-3 text-2xl font-semibold text-forest">Thank you.</h2>
         <p className="mt-3 max-w-md text-sm leading-relaxed text-forest/70">
-          We&apos;ll follow up soon and share the right next materials privately.
+          We&apos;ll reply within a few working days with next steps for your application.
         </p>
       </div>
     );
@@ -85,15 +85,15 @@ export function ContactForm() {
           required
           rows={4}
           className="mt-2 w-full resize-y border border-forest/15 bg-beige px-3 py-3 text-sm text-forest outline-none focus:border-purple"
-          placeholder="How would you like to work with Bisket?"
+          placeholder="What are you building, and where could a bio-based single-layer board fit?"
         />
       </label>
 
       {status === "error" ? (
         <p className="mt-4 text-sm text-purple">
-          Couldn&apos;t send just now. Email us directly at{" "}
-          <a href="mailto:bisket.innovation@gmail.com" className="underline">
-            bisket.innovation@gmail.com
+          Your message didn&apos;t go through. Please email us at{" "}
+          <a href="mailto:founder@bisketlabs.com" className="underline">
+            founder@bisketlabs.com
           </a>
           .
         </p>
@@ -104,7 +104,7 @@ export function ContactForm() {
         disabled={status === "loading"}
         className="mt-6 inline-flex items-center justify-center bg-lime px-6 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-lime-deep disabled:opacity-60"
       >
-        {status === "loading" ? "Sending…" : "Start a conversation"}
+        {status === "loading" ? "Sending…" : "Send enquiry"}
       </button>
     </form>
   );

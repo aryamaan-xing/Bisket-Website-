@@ -5,33 +5,33 @@ const team = [
   {
     name: "Aryamaan Singh",
     role: "Co-founder & CEO",
-    line: "Product, strategy, commercialization, and ecosystem.",
+    line: "Leads product, strategy, partnerships and commercialisation.",
     initials: "AS",
   },
   {
     name: "Shereena P. Joy",
     role: "Co-founder & CTO",
-    line: "Inventor and technology leadership.",
+    line: "Inventor of the Bisket material; leads technology and R&D.",
     initials: "SJ",
-  },
-  {
-    name: "Dr. Prasana Kartik",
-    role: "Senior Scientist",
-    line: "Materials research and technical development.",
-    initials: "PK",
   },
   {
     name: "Rohith Sharma",
     role: "Co-founder & COO",
-    line: "Operations and execution.",
+    line: "Leads operations, manufacturing partnerships and execution.",
     initials: "RS",
+  },
+  {
+    name: "Dr. Prasana Kartik",
+    role: "Senior Scientist",
+    line: "Drives materials research and technical development.",
+    initials: "PK",
   },
 ];
 
 export const metadata = {
   title: "Our team",
   description:
-    "Meet the Bisket Labs team building bio-based electronic substrates from agricultural biomass.",
+    "Meet the IIT Madras spinout team behind Bisket Labs' bio-based single-layer PCB laminate.",
 };
 
 export default function TeamPage() {
@@ -44,7 +44,7 @@ export default function TeamPage() {
               Our team
             </p>
             <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-forest md:text-5xl">
-              Building materials for a more circular electronics industry.
+              The team turning crop residue into circuit boards.
             </h1>
           </Reveal>
 
@@ -68,9 +68,9 @@ export default function TeamPage() {
       <section className="bg-forest text-beige">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-5 py-14 md:flex-row md:items-center md:px-8">
           <p className="text-xl font-medium tracking-tight md:text-2xl">
-            Work with the people building it.
+            Have a board in mind? Talk to the founders.
           </p>
-          <ButtonLink href="/contact">Partner with us</ButtonLink>
+          <ButtonLink href="/contact">Talk to the team</ButtonLink>
         </div>
       </section>
     </>

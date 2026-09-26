@@ -4,23 +4,23 @@ import { Reveal } from "@/components/Reveal";
 
 const moments = [
   {
-    title: "Built for heat",
-    line: "Formulated for electronics that need higher thermal tolerance.",
+    title: "Flame-retardant and heat-stable",
+    line: "UL94 V-0 rated, with a measured Tg of 262 °C and copper peel strength up to 0.98 N/mm.",
   },
   {
     title: "Made to manufacture",
-    line: "Developed with PCB partners in Bengaluru and Chennai — not only in the lab.",
+    line: "Processed with PCB fabrication partners in Bengaluru and Chennai — not just in the lab.",
   },
   {
-    title: "An FR-4 alternative",
-    line: "Designed as a lower-impact substrate alternative — qualified per application.",
+    title: "Built for low-power, single-layer boards",
+    line: "A lower-impact alternative to conventional laminates for toys and STEM kits, medical disposables and IoT — qualified application by application.",
   },
 ];
 
 export const metadata = {
   title: "Our technology",
   description:
-    "From biomass to circuit board — bio-based PCB substrates engineered for real electronics manufacturing.",
+    "A lignocellulosic, UL94 V-0 single-layer PCB laminate from crop residue — Tg 262 °C, controlled end-of-life. Developed at IIT Madras.",
 };
 
 export default function TechnologyPage() {
@@ -45,8 +45,9 @@ export default function TechnologyPage() {
               From biomass to circuit board.
             </h1>
             <p className="mt-6 max-w-xl text-base font-light leading-relaxed text-beige/75 md:text-lg">
-              Born from materials research at IIT Madras — a proprietary resin from
-              agricultural biomass, engineered into substrates for electronics.
+              An IIT Madras spinout. Our proprietary lignocellulosic resin turns
+              agricultural residue into a single-layer PCB laminate — about 84% organic
+              by volume, with a controlled end-of-life.
             </p>
           </Reveal>
         </div>
@@ -61,15 +62,15 @@ export default function TechnologyPage() {
             <ul className="mt-8 space-y-5">
               <li className="border-l-2 border-lime pl-4">
                 <p className="font-semibold text-forest">Single-layer boards demonstrated</p>
-                <p className="mt-1 text-sm text-forest/65">Functional prototypes in real circuits</p>
+                <p className="mt-1 text-sm text-forest/65">Working prototypes running real circuits</p>
               </li>
               <li className="border-l-2 border-purple pl-4">
                 <p className="font-semibold text-forest">Two-layer in development</p>
-                <p className="mt-1 text-sm text-forest/65">Achieved and being optimized</p>
+                <p className="mt-1 text-sm text-forest/65">Early builds, under development</p>
               </li>
               <li className="border-l-2 border-forest/30 pl-4">
-                <p className="font-semibold text-forest">~80% bio-based</p>
-                <p className="mt-1 text-sm text-forest/65">Current formulation direction</p>
+                <p className="font-semibold text-forest">~84% organic by volume</p>
+                <p className="mt-1 text-sm text-forest/65">Lignocellulosic resin system, UL94 V-0</p>
               </li>
             </ul>
           </Reveal>
@@ -87,10 +88,10 @@ export default function TechnologyPage() {
                 Technical depth
               </p>
               <p className="mt-3 text-sm font-light leading-relaxed text-beige/85">
-                Material data is shared privately — not published as a public datasheet.
+                Want the full dataset? We share detailed material data privately with evaluation partners.
               </p>
               <div className="mt-5">
-                <ButtonLink href="/contact">Request a technical conversation</ButtonLink>
+                <ButtonLink href="/contact">Request technical data</ButtonLink>
               </div>
             </div>
           </Reveal>
@@ -117,7 +118,7 @@ export default function TechnologyPage() {
               Prototypes
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-forest md:text-3xl">
-              Boards that already run.
+              Boards that already work.
             </h2>
           </Reveal>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -128,7 +129,7 @@ export default function TechnologyPage() {
               },
               {
                 src: "/images/prototype-led.png",
-                caption: "LED / thermal demo",
+                caption: "LED demo board",
               },
               {
                 src: "/images/prototype-sensor.png",
@@ -170,11 +171,11 @@ export default function TechnologyPage() {
         <div className="relative z-10 mx-auto max-w-6xl px-5 py-16 text-center md:px-8 md:py-20">
           <Reveal>
             <p className="mx-auto max-w-lg text-base text-beige/80">
-              Evaluating with OEMs across practical electronics — ask us where it fits
-              your product.
+              Building low-power, single-layer electronics? Tell us about your board and
+              we&apos;ll tell you honestly whether Bisket fits.
             </p>
             <div className="mt-8">
-              <ButtonLink href="/contact">Partner with us</ButtonLink>
+              <ButtonLink href="/contact">Evaluate Bisket for your board</ButtonLink>
             </div>
           </Reveal>
         </div>

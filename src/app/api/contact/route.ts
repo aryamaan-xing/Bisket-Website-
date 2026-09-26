@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "email_not_configured" }, { status: 503 });
   }
 
-  const to = process.env.CONTACT_TO_EMAIL ?? "bisket.innovation@gmail.com";
+  const to = process.env.CONTACT_TO_EMAIL ?? "founder@bisketlabs.com";
   const from =
     process.env.CONTACT_FROM_EMAIL ?? "Bisket Labs <onboarding@resend.dev>";
 

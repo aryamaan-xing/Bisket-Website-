@@ -32,7 +32,7 @@ export function ParallaxHome() {
       <ImpactChapter
         reduce={!!reduce}
         eyebrow="Impact"
-        title="E-waste has nowhere good to go."
+        title="Most circuit boards end up as e-waste with nowhere good to go."
         image="/images/impact-ewaste.png"
         imageAlt="Discarded circuit boards representing electronic waste"
         align="left"
@@ -41,7 +41,7 @@ export function ParallaxHome() {
       <ImpactChapter
         reduce={!!reduce}
         eyebrow="Impact"
-        title="Crop residue is still burned."
+        title="Meanwhile, crop residue is still burned in the field."
         image="/images/impact-crop-residue.png"
         imageAlt="Agricultural crop residue in a field at dusk"
         align="right"
@@ -97,16 +97,17 @@ function Hero({ reduce }: { reduce: boolean }) {
             priority
           />
           <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight text-beige md:text-5xl lg:text-6xl">
-            Electronics, engineered from biomass.
+            Single-layer PCBs, made from crop residue.
           </h1>
           <p className="mt-5 max-w-md text-base font-light leading-relaxed text-beige/80 md:text-lg">
-            Bio-based PCB substrates from agricultural biomass — built for real
-            electronics manufacturing.
+            A bio-based, UL94 V-0 PCB laminate for low-power electronics — toys and
+            STEM kits, medical disposables, IoT — with a controlled end-of-life. An
+            IIT Madras spinout.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink href="/contact">Partner with us</ButtonLink>
+            <ButtonLink href="/contact">Evaluate for your board</ButtonLink>
             <ButtonLink href="/technology" variant="secondary">
-              See the technology
+              How it works
             </ButtonLink>
           </div>
         </div>
@@ -203,10 +204,10 @@ function Transformation({ reduce }: { reduce: boolean }) {
             The shift
           </p>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight text-forest md:text-4xl">
-            We turn agricultural biomass into engineered electronic substrates.
+            We turn crop residue into a PCB laminate built for end-of-life.
           </h2>
           <ol className="mt-10 space-y-4">
-            {["Biomass", "Resin", "Board", "Electronics"].map((step, i) => (
+            {["Crop residue", "Bio-resin", "Laminate", "Working board"].map((step, i) => (
               <li key={step} className="flex items-center gap-4">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-forest text-xs font-semibold text-lime">
                   {i + 1}
@@ -275,11 +276,11 @@ function ProductReveal({ reduce }: { reduce: boolean }) {
           In the real world
         </p>
         <h2 className="mt-4 max-w-xl text-3xl font-semibold tracking-tight text-beige md:text-5xl">
-          From laboratory resin to working electronics.
+          From lab resin to working boards.
         </h2>
         <p className="mt-4 max-w-md text-sm font-light text-beige/75 md:text-base">
-          Single-layer boards demonstrated. Two-layer in development. Built with PCB
-          partners in Bengaluru and Chennai.
+          Single-layer boards demonstrated and running real circuits, processed with PCB
+          fabrication partners in Bengaluru and Chennai.
         </p>
       </div>
     </section>
@@ -302,8 +303,8 @@ function Proof() {
           ))}
         </div>
         <p className="mt-10 inline-flex items-center gap-3 border-l-2 border-purple-soft pl-4 text-sm text-beige/70">
-          <span className="font-semibold text-lime">100+</span>
-          PCB fabrication iterations with manufacturing partners
+          <span className="font-semibold text-lime">UL94 V-0</span>
+          flame rating · Tg 262 °C · ~84% organic by volume
         </p>
       </div>
     </section>
@@ -318,12 +319,12 @@ function ClosingCta() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-purple">
             Based in
           </p>
-          <p className="mt-3 text-2xl font-semibold text-forest">Bangalore · Chennai</p>
+          <p className="mt-3 text-2xl font-semibold text-forest">Bengaluru · Chennai</p>
           <p className="mt-3 max-w-sm text-sm text-forest/65">
-            Investors and OEMs — let&apos;s qualify the next board together.
+            Building toys, STEM kits, medical disposables or IoT devices? Let&apos;s qualify your next board together.
           </p>
         </div>
-        <ButtonLink href="/contact">Partner with us</ButtonLink>
+        <ButtonLink href="/contact">Start an evaluation</ButtonLink>
       </div>
     </section>
   );
