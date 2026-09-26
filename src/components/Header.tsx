@@ -55,8 +55,8 @@ export function Header() {
         </nav>
 
         <div className="hidden flex-col items-end text-right text-[11px] leading-tight text-forest/70 lg:flex">
-          <a href="mailto:bisket.innovation@gmail.com" className="hover:text-purple">
-            bisket.innovation@gmail.com
+          <a href="mailto:founder@bisketlabs.com" className="hover:text-purple">
+            founder@bisketlabs.com
           </a>
           <a href="tel:+918884888454" className="hover:text-purple">
             +91 88848 88454
@@ -99,7 +99,7 @@ export function Header() {
             ))}
           </nav>
           <div className="mt-6 flex flex-col gap-1 text-sm text-forest/70">
-            <a href="mailto:bisket.innovation@gmail.com">bisket.innovation@gmail.com</a>
+            <a href="mailto:founder@bisketlabs.com">founder@bisketlabs.com</a>
             <a href="tel:+918884888454">+91 88848 88454</a>
           </div>
         </div>

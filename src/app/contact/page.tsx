@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 export const metadata = {
   title: "Contact us",
   description:
-    "Investors, OEMs, and partners — start a conversation with Bisket Labs.",
+    "Evaluate a bio-based PCB laminate for your product. Contact Bisket Labs: OEMs, PCB manufacturers and investors.",
 };
 
 export default function ContactPage() {
@@ -16,21 +16,22 @@ export default function ContactPage() {
             Contact us
           </p>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-forest md:text-5xl">
-            Let&apos;s build the next board together.
+            Let&apos;s put your next board on biomass.
           </h1>
           <p className="mt-5 max-w-sm text-base font-light leading-relaxed text-forest/70">
-            Investors, OEMs, and partners — tell us who you are. We&apos;ll share the
-            right next materials privately.
+            OEMs, PCB manufacturers and investors: tell us about your board. Single-layer
+            is available now for low-power products like toys, STEM kits, medical
+            disposables and IoT. We&apos;ll share evaluation details privately.
           </p>
 
           <div className="mt-10 space-y-6 text-sm">
             <div>
               <p className="font-semibold text-forest">Email</p>
               <a
-                href="mailto:bisket.innovation@gmail.com"
+                href="mailto:founder@bisketlabs.com"
                 className="mt-1 inline-block text-forest/70 transition-colors hover:text-purple"
               >
-                bisket.innovation@gmail.com
+                founder@bisketlabs.com
               </a>
             </div>
             <div>
@@ -47,7 +48,7 @@ export default function ContactPage() {
             </div>
             <div>
               <p className="font-semibold text-forest">Locations</p>
-              <p className="mt-1 text-forest/70">Bangalore / KGF</p>
+              <p className="mt-1 text-forest/70">Bengaluru / KGF</p>
               <p className="text-forest/70">Chennai</p>
             </div>
           </div>
@@ -56,8 +57,8 @@ export default function ContactPage() {
         <Reveal delay={0.08}>
           <ContactForm />
           <p className="mt-4 text-xs text-forest/50">
-            By submitting, you agree we may contact you about your enquiry. We do not
-            publish a public datasheet — technical materials are shared privately.
+            By submitting, you agree we may contact you about your enquiry. Detailed
+            technical data is shared privately with evaluation partners.
           </p>
         </Reveal>
       </div>

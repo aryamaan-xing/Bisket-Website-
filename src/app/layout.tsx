@@ -11,11 +11,11 @@ const raleway = Raleway({
 });
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bisket-labs-website.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bisketlabs.com";
 
-const title = "Bisket Labs — Electronics, engineered from biomass";
+const title = "Bisket Labs — Circuit boards, made from crop residue";
 const description =
-  "Bio-based PCB substrates from agricultural biomass — built for real electronics manufacturing. Partner with Bisket Labs.";
+  "Bisket Labs makes a bio-based PCB laminate platform from crop residue: halogen-free UL94 V-0, no glass fibre, lighter than FR-4, designed for a controlled end-of-life. Founded by IIT Madras and NUS alumni.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     "sustainable PCB laminate",
     "agricultural biomass electronics",
     "FR-4 alternative",
+    "bio-based PCB laminate",
+    "halogen-free PCB laminate",
+    "UL94 V-0 bio-based laminate",
     "Bisket Labs",
   ],
   icons: {
@@ -53,7 +56,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Bisket Labs — Electronics, engineered from biomass",
+        alt: "Bisket Labs — Circuit boards, made from crop residue",
         type: "image/png",
       },
     ],

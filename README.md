@@ -6,7 +6,7 @@ Marketing site for Bisket Labs — bio-based PCB substrates engineered from agri
 
 - `/` — parallax impact story (hero → problem → shift → product → proof → CTA)
 - `/technology` — capability story + prototype gallery (no public datasheet)
-- `/team` — four founders/scientists
+- `/team` — three co-founders and senior scientist
 - `/contact` — enquiry form with role selector
 
 ## Brand
@@ -36,9 +36,9 @@ npm start
 Submissions are logged server-side. Optional email delivery via Resend:
 
 - `RESEND_API_KEY`
-- `CONTACT_TO_EMAIL` (default `bisket.innovation@gmail.com`)
+- `CONTACT_TO_EMAIL` (default `founder@bisketlabs.com`)
 - `CONTACT_FROM_EMAIL`
-- `NEXT_PUBLIC_SITE_URL` (for Open Graph / metadata base)
+- `NEXT_PUBLIC_SITE_URL` (for Open Graph / metadata base; fallback `https://www.bisketlabs.com`)
 
 ## Deploy
 
