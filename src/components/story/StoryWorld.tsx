@@ -4,6 +4,7 @@ import { Html, RoundedBox } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
 import * as THREE from "three";
+import { CinematicPlates } from "@/components/story/CinematicPlates";
 import { lerp, seeded, smoothstep } from "@/components/story/math";
 import {
   boardOpacity,
@@ -149,7 +150,49 @@ const CHUNKS: Array<{ x: number; z: number; w: number; d: number; spin: number }
   { x: 0.08, z: 0.24, w: 0.44, d: 0.3, spin: 0.3 },
 ];
 
-function cameraAt(t: number) {
+type Shot = {
+  px: number;
+  py: number;
+  pz: number;
+  lx: number;
+  ly: number;
+  lz: number;
+  fov: number;
+};
+
+const DIVE: Array<{ t: number; pos: [number, number, number]; look: [number, number, number]; fov: number }> = [
+  { t: 0, pos: [0.72, 0.52, 1.2], look: [0, 0.02, 0], fov: 32 },
+  { t: 0.16, pos: [0.46, 0.36, 0.86], look: [0.04, 0.06, -0.05], fov: 30 },
+  { t: 0.32, pos: [0.1, 0.16, 0.28], look: [0, 0.04, -0.45], fov: 22 },
+  { t: 0.48, pos: [0, 0.05, -0.45], look: [0, 0.01, -1.5], fov: 16 },
+  { t: 0.64, pos: [0, 0.02, -1.45], look: [0, 0, -2.6], fov: 12 },
+  { t: 0.8, pos: [0, 0, -2.55], look: [0, 0, -3.7], fov: 9 },
+];
+
+function sampleKeys(
+  keys: Array<{ t: number; pos: [number, number, number]; look: [number, number, number]; fov: number }>,
+  t: number,
+): Shot {
+  const clamped = Math.min(keys[keys.length - 1].t, Math.max(keys[0].t, t));
+  let i = 0;
+  while (i < keys.length - 2 && keys[i + 1].t < clamped) i += 1;
+  const a = keys[i];
+  const b = keys[i + 1];
+  const span = b.t - a.t || 1;
+  const u = Math.min(1, Math.max(0, (clamped - a.t) / span));
+  const s = u * u * (3 - 2 * u);
+  return {
+    px: lerp(a.pos[0], b.pos[0], s),
+    py: lerp(a.pos[1], b.pos[1], s),
+    pz: lerp(a.pos[2], b.pos[2], s),
+    lx: lerp(a.look[0], b.look[0], s),
+    ly: lerp(a.look[1], b.look[1], s),
+    lz: lerp(a.look[2], b.look[2], s),
+    fov: lerp(a.fov, b.fov, s),
+  };
+}
+
+function beatCamera(t: number): Shot {
   const clamped = Math.min(8, Math.max(0, t));
   const i = Math.min(7, Math.floor(clamped));
   const f = clamped >= 8 ? 1 : clamped - i;
@@ -164,6 +207,21 @@ function cameraAt(t: number) {
     lz: lerp(a.look[2], b.look[2], f),
     fov: lerp(a.fov, b.fov, f),
   };
+}
+
+function cameraAt(t: number): Shot {
+  if (t < 0.86) return sampleKeys(DIVE, t);
+  return beatCamera(Math.max(1, t));
+}
+
+/** Portrait frames are tall, so establishing shots open up; the fibre dive stays tight. */
+function frameShot(shot: Shot, aspect: number): Shot {
+  if (aspect >= 0.95) return shot;
+  if (shot.fov >= 26) {
+    const boost = Math.min(1.4, 0.72 / Math.max(aspect, 0.35));
+    return { ...shot, fov: shot.fov * boost, pz: shot.pz * 1.06 };
+  }
+  return { ...shot, fov: shot.fov * 1.1 };
 }
 
 function fadeTree(root: THREE.Object3D | null, opacity: number) {
@@ -319,7 +377,8 @@ export function StoryWorld({
     const t = storyTime(progressRef.current);
     const time = state.clock.elapsedTime;
     const cam = state.camera as THREE.PerspectiveCamera;
-    const shot = cameraAt(t);
+    const aspect = state.size.width / Math.max(1, state.size.height);
+    const shot = frameShot(cameraAt(t), aspect);
     cam.position.set(shot.px, shot.py, shot.pz);
     cam.lookAt(shot.lx, shot.ly, shot.lz);
     if (Math.abs(cam.fov - shot.fov) > 0.05) {
@@ -327,7 +386,7 @@ export function StoryWorld({
       cam.updateProjectionMatrix();
     }
 
-    const fieldAmt = smoothstep(0.55, 0.95, t) * (1 - smoothstep(1.85, 2.45, t));
+    const fieldAmt = smoothstep(0.94, 1.18, t) * (1 - smoothstep(1.85, 2.45, t));
     const i = Math.min(7, Math.max(0, Math.floor(Math.min(t, 7.999))));
     bgColor.copy(BG[i]).lerp(BG[i + 1], t >= 8 ? 1 : t - i);
     bgRef.current?.copy(bgColor);
@@ -345,6 +404,7 @@ export function StoryWorld({
     const hero = Math.max(1 - smoothstep(0, 0.75, t), smoothstep(7.25, 8, t));
     const split = smoothstep(5.2, 5.85, t) * (1 - smoothstep(6.5, 7.05, t));
     const sink = smoothstep(6.55, 7.25, t) * (1 - smoothstep(7.45, 7.9, t));
+    const crack = smoothstep(0.16, 0.48, t) * (1 - smoothstep(0.48, 0.62, t));
     const yaw = lerp(0.35 + Math.sin(t * 0.7) * 0.15, 0.55 + Math.sin(time * 0.45) * 0.28, hero);
     const tilt = lerp(0.2, 0.48, hero);
     const boardX = 1.12 * split;
@@ -354,8 +414,9 @@ export function StoryWorld({
       boardRef.current.visible = opacity > 0.02;
       boardRef.current.position.set(boardX, boardY, 0);
       boardRef.current.rotation.order = "YXZ";
-      boardRef.current.rotation.y = yaw;
-      boardRef.current.rotation.x = tilt;
+      boardRef.current.rotation.y = yaw + crack * 0.45;
+      boardRef.current.rotation.x = tilt + crack * 0.2;
+      boardRef.current.scale.setScalar(1 + crack * 0.12);
     }
     fadeTree(bodyRef.current, opacity);
 
@@ -389,13 +450,13 @@ export function StoryWorld({
     if (fibreMesh) {
       for (let n = 0; n < fibres.length; n++) {
         const f = fibres[n];
-        const wEarly = (1 - smoothstep(0.2, 0.95, t)) * smoothstep(0.18, 0.5, t);
-        const wFall = smoothstep(0.35, 0.75, t) * (1 - smoothstep(1.15, 1.7, t));
+        const wBoard = smoothstep(0.12, 0.28, t) * (1 - smoothstep(0.36, 0.62, t));
+        const wTunnel = smoothstep(0.3, 0.48, t) * (1 - smoothstep(0.8, 1.05, t));
         const wSwirl = smoothstep(1.4, 1.9, t) * (1 - smoothstep(2.55, 3.2, t));
         const wSheet = smoothstep(2.35, 2.9, t) * (1 - smoothstep(3.4, 3.95, t));
         const wSoil = smoothstep(6.45, 7.0, t) * (1 - smoothstep(7.4, 7.9, t));
         const wLate = smoothstep(7.35, 7.8, t) * (1 - smoothstep(7.9, 8, t));
-        const sum = wEarly + wFall + wSwirl + wSheet + wSoil + wLate;
+        const sum = wBoard + wTunnel + wSwirl + wSheet + wSoil + wLate;
         if (sum < 0.02) {
           dummy.scale.setScalar(0);
           dummy.position.set(0, -5, 0);
@@ -403,15 +464,17 @@ export function StoryWorld({
           fibreMesh.setMatrixAt(n, dummy.matrix);
           continue;
         }
-        const fallU = smoothstep(0.4, 1.2, t);
-        const fallX = lerp(f.bx, f.fx, fallU);
-        const fallY = lerp(1.2, 0.05, fallU) + Math.sin(time * 1.4 + f.phase) * 0.04;
-        const fallZ = lerp(f.bz, f.fz, fallU);
+        const depth = (n % 48) / 47;
+        const ring = f.swirl + Math.floor(n / 48) * 0.55;
+        const tunnelRadius = 0.08 + (n % 6) * 0.1 + depth * 0.2;
+        const tunnelX = Math.cos(ring) * tunnelRadius;
+        const tunnelY = Math.sin(ring) * tunnelRadius * 0.78;
+        const tunnelZ = lerp(0.2, -3.6, depth);
         const ang = f.swirl + time * 0.75 + t;
-        const radius = lerp(1.55, 0.22, smoothstep(1.7, 2.85, t));
-        const swirlX = Math.cos(ang) * radius;
+        const swirlRadius = lerp(1.55, 0.22, smoothstep(1.7, 2.85, t));
+        const swirlX = Math.cos(ang) * swirlRadius;
         const swirlY = lerp(0.2, 0.9, smoothstep(1.45, 2.15, t)) + Math.sin(ang * 2) * 0.1;
-        const swirlZ = Math.sin(ang) * radius * 0.62;
+        const swirlZ = Math.sin(ang) * swirlRadius * 0.62;
         const pressU = smoothstep(2.5, 3.15, t);
         const sheetX = f.sx * lerp(1.1, 0.92, pressU);
         const sheetY = lerp(0.5, 0.07, pressU);
@@ -425,13 +488,22 @@ export function StoryWorld({
         const lateY = lerp(0.2 + Math.sin(time * 2 + f.phase) * 0.15, f.by, assemble);
         const lateZ = lerp(f.soilz * 0.35, f.bz, assemble);
         dummy.position.set(
-          (f.bx * wEarly + fallX * wFall + swirlX * wSwirl + sheetX * wSheet + soilX * wSoil + lateX * wLate) / sum,
-          (f.by * wEarly + fallY * wFall + swirlY * wSwirl + sheetY * wSheet + soilY * wSoil + lateY * wLate) / sum,
-          (f.bz * wEarly + fallZ * wFall + swirlZ * wSwirl + sheetZ * wSheet + soilZ * wSoil + lateZ * wLate) / sum,
+          (f.bx * wBoard + tunnelX * wTunnel + swirlX * wSwirl + sheetX * wSheet + soilX * wSoil + lateX * wLate) / sum,
+          (f.by * wBoard + tunnelY * wTunnel + swirlY * wSwirl + sheetY * wSheet + soilY * wSoil + lateY * wLate) / sum,
+          (f.bz * wBoard + tunnelZ * wTunnel + swirlZ * wSwirl + sheetZ * wSheet + soilZ * wSoil + lateZ * wLate) / sum,
         );
-        dummy.rotation.set(f.phase + time * 0.4, f.phase + time * 0.6, 0);
+        const tunnelShare = wTunnel / sum;
+        dummy.rotation.set(
+          f.phase * (0.2 + (1 - tunnelShare) * 0.8) + time * 0.15 * (1 - tunnelShare),
+          f.phase * tunnelShare * 0.25 + (f.phase + time * 0.6) * (1 - tunnelShare),
+          f.phase * (1 - tunnelShare),
+        );
         const s = Math.min(1, sum);
-        dummy.scale.set(f.thick * s, f.len * s, f.thick * s);
+        dummy.scale.set(
+          f.thick * s * (1 + tunnelShare),
+          lerp(f.len, f.thick * 1.35, tunnelShare) * s,
+          lerp(f.thick, f.len * (1 + tunnelShare * 4.2), tunnelShare) * s,
+        );
         dummy.updateMatrix();
         fibreMesh.setMatrixAt(n, dummy.matrix);
       }
@@ -439,7 +511,7 @@ export function StoryWorld({
     }
 
     const stalkMesh = stalkRef.current;
-    const stalkAmt = smoothstep(0.7, 1.05, t) * (1 - smoothstep(2.05, 2.55, t));
+    const stalkAmt = smoothstep(1.0, 1.28, t) * (1 - smoothstep(2.05, 2.55, t));
     const lift = smoothstep(1.3, 2.1, t);
     if (stalkMesh) {
       if (stalkMat.current) stalkMat.current.opacity = stalkAmt;
@@ -460,7 +532,7 @@ export function StoryWorld({
     }
 
     const smokeMesh = smokeRef.current;
-    const smokeAmt = smoothstep(0.75, 1.05, t) * (1 - smoothstep(1.5, 1.95, t));
+    const smokeAmt = smoothstep(1.02, 1.3, t) * (1 - smoothstep(1.5, 1.95, t));
     if (smokeMesh) {
       if (smokeMat.current) smokeMat.current.opacity = smokeAmt * 0.28;
       smokeMesh.visible = smokeAmt > 0.03;
@@ -547,6 +619,7 @@ export function StoryWorld({
 
   return (
     <>
+      <CinematicPlates progressRef={progressRef} />
       <color ref={bgRef} attach="background" args={["#0c1a14"]} />
       <fog ref={fogRef} attach="fog" args={["#0c1a14", 7, 26]} />
       <ambientLight ref={ambRef} intensity={0.22} />

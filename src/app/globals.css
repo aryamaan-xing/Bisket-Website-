@@ -83,22 +83,37 @@ body {
     linear-gradient(160deg, var(--forest) 0%, #0d241c 45%, #1a1530 100%);
 }
 
-/* Scroll story: WebGL on large screens that allow motion; static frames otherwise. */
+/* Scroll story: WebGL at every width. Static frames only for reduced motion or no WebGL. */
 .story-scroll {
-  display: none;
+  display: block;
+  overflow-anchor: none;
+  touch-action: pan-y;
+}
+
+.story-stage {
+  /* svh keeps a stable fallback; dvh tracks the visible area when the mobile address bar shows or hides. */
+  height: 100svh;
+  height: 100dvh;
+  touch-action: pan-y;
+}
+
+/* The canvas must not steal vertical pans on iOS Safari or Android Chrome. */
+.story-stage canvas {
+  touch-action: pan-y !important;
+  pointer-events: none !important;
 }
 
 .story-static {
-  display: block;
+  display: none;
 }
 
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: reduce) {
   .story-scroll {
-    display: block;
+    display: none;
   }
 
   .story-static {
-    display: none;
+    display: block;
   }
 }
 
@@ -121,6 +136,15 @@ html.story-force-static .story-static {
 
 .story-orbit {
   animation: story-orbit 13s linear infinite;
+}
+
+@media (max-width: 767px) {
+  .story-orbit {
+    animation: none;
+    top: auto;
+    bottom: 42%;
+    transform: translateX(-50%);
+  }
 }
 
 .section-rule {
