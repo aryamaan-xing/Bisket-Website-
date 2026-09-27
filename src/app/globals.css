@@ -125,6 +125,62 @@ html.story-force-static .story-static {
   display: block;
 }
 
+/* Static fallback: each card sticks, and the next one slides up over it. */
+.story-stack {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-stack-card {
+  position: sticky;
+  top: calc(4.25rem + var(--stack) * 0.4rem);
+  z-index: calc(var(--stack) + 1);
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 4.25rem - var(--stack) * 0.4rem);
+  min-height: calc(100dvh - 4.25rem - var(--stack) * 0.4rem);
+  background: var(--forest);
+  border-top: 1px solid color-mix(in srgb, var(--beige) 18%, transparent);
+  box-shadow: 0 -22px 40px rgba(0, 0, 0, 0.42);
+}
+
+.story-stack-face {
+  transform: scale(calc(1 - var(--cover, 0) * 0.08));
+  transform-origin: center top;
+  filter: brightness(calc(1 - var(--cover, 0) * 0.45));
+}
+
+.story-stack-art {
+  height: 28svh;
+  max-height: 13.5rem;
+  overflow: hidden;
+}
+
+.story-stack-art > * {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+@media (min-width: 768px) {
+  .story-stack-art {
+    height: auto;
+    max-height: none;
+  }
+
+  .story-stack-art > * {
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-stack-face {
+    transform: none;
+    filter: none;
+  }
+}
+
 @keyframes story-orbit {
   from {
     transform: translate(-50%, -50%) rotate(0deg) translateX(156px) rotate(0deg);
