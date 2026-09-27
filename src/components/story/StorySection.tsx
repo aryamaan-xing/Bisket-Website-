@@ -4,7 +4,7 @@ import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-mot
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
-import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA, STORY_NOTE } from "@/components/story/copy";
+import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA } from "@/components/story/copy";
 import { FrameArt } from "@/components/story/StoryFrames";
 import { StoryFallback } from "@/components/story/StoryFallback";
 import { copyIndex, proofIndex } from "@/components/story/timeline";
@@ -141,7 +141,6 @@ export function StorySection() {
               {beat === STORY_BEATS.length - 1 ? (
                 <div className="pointer-events-auto mt-6">
                   <ButtonLink href="/contact">{STORY_CTA}</ButtonLink>
-                  <p className="mt-4 text-sm text-beige/75">{STORY_NOTE}</p>
                 </div>
               ) : null}
             </div>

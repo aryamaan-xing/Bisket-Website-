@@ -1,11 +1,11 @@
 export const STORY_BEATS = [
   {
     eyebrow: "The board",
-    title: "Circuit boards, made from crop residue.",
+    title: "A finished board, with the LED already on.",
   },
   {
     eyebrow: "The field",
-    title: "Every harvest leaves crop residue behind. Most of it is burned.",
+    title: "After harvest, most of what is left in the field is burned.",
   },
   {
     eyebrow: "Feedstock",
@@ -13,15 +13,15 @@ export const STORY_BEATS = [
   },
   {
     eyebrow: "Laminate",
-    title: "Pressed into a bio-based laminate. No glass fibre.",
+    title: "The fibres bind, then the press flattens them into a sheet.",
   },
   {
     eyebrow: "Fabrication",
-    title: "A working circuit board, on familiar fab processes.",
+    title: "Copper traces etch, parts seat, and the LED lights on familiar fab lines.",
   },
   {
     eyebrow: "Proof",
-    title: "Tougher, lighter and more arc-resistant than FR-4.",
+    title: "Tougher and more arc-resistant than FR-4.",
   },
   {
     eyebrow: "Contrast",
@@ -29,11 +29,11 @@ export const STORY_BEATS = [
   },
   {
     eyebrow: "End of life",
-    title: "Designed for a controlled end-of-life.",
+    title: "In the soil the board comes apart, and a sprout grows.",
   },
   {
     eyebrow: "Again",
-    title: "Ready for your next board.",
+    title: "The fibres rise, and the same board is back.",
   },
 ] as const;
 
@@ -46,4 +46,3 @@ export const PROOF_CALLOUTS = [
 ] as const;
 
 export const STORY_CTA = "Start an evaluation";
-export const STORY_NOTE = "Founded by IIT Madras and NUS alumni.";

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
-import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA, STORY_NOTE } from "@/components/story/copy";
+import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA } from "@/components/story/copy";
 import { FrameArt } from "@/components/story/StoryFrames";
 
 export function StoryFallback() {
@@ -91,7 +91,6 @@ export function StoryFallback() {
                 {index === STORY_BEATS.length - 1 ? (
                   <div className="mt-6">
                     <ButtonLink href="/contact">{STORY_CTA}</ButtonLink>
-                    <p className="mt-4 text-sm text-beige/70">{STORY_NOTE}</p>
                   </div>
                 ) : null}
               </div>
