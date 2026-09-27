@@ -83,6 +83,246 @@ body {
     linear-gradient(160deg, var(--forest) 0%, #0d241c 45%, #1a1530 100%);
 }
 
+/* Scroll story. The film plays at every width. Static cards are the fallback for reduced motion or when video cannot play. */
+.story-scroll {
+  display: block;
+  overflow-anchor: none;
+  touch-action: pan-y;
+}
+
+.story-stage {
+  /* svh keeps a stable fallback; dvh tracks the visible area when the mobile address bar shows or hides. */
+  height: 100svh;
+  height: 100dvh;
+  touch-action: pan-y;
+}
+
+.story-stage video,
+.story-stage img {
+  touch-action: pan-y !important;
+  pointer-events: none !important;
+}
+
+.story-board {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: #07110d;
+}
+
+.story-board img {
+  position: absolute;
+  width: 168%;
+  height: 168%;
+  max-width: none;
+  left: 58%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.story-board-sweep {
+  position: absolute;
+  inset: -10%;
+  background: linear-gradient(112deg, transparent 38%, rgba(255, 244, 214, 0.42) 50%, transparent 62%);
+  mix-blend-mode: soft-light;
+  animation: story-sweep 8.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.story-led-glow {
+  position: absolute;
+  width: 4.75rem;
+  height: 4.75rem;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 250, 230, 0.95) 0%, rgba(255, 196, 70, 0.5) 18%, rgba(255, 160, 40, 0.16) 40%, transparent 68%);
+  mix-blend-mode: screen;
+  animation: story-led 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes story-sweep {
+  0%,
+  35% {
+    transform: translateX(-55%);
+  }
+
+  68%,
+  100% {
+    transform: translateX(55%);
+  }
+}
+
+@keyframes story-led {
+  0%,
+  100% {
+    opacity: 0.4;
+    filter: blur(0);
+  }
+
+  50% {
+    opacity: 1;
+    filter: blur(1px);
+  }
+}
+
+.story-film-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform-origin: center center;
+  will-change: opacity, transform, filter;
+}
+
+.story-film-layer video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-film-leak {
+  z-index: 2;
+  mix-blend-mode: screen;
+}
+
+.story-light-leak {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(ellipse 70% 80% at 72% 42%, rgba(255, 186, 72, 0.95), transparent 58%),
+    linear-gradient(118deg, transparent 18%, rgba(255, 92, 28, 0.55) 48%, transparent 74%);
+}
+
+.story-beat-copy {
+  animation: story-rise 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes story-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.story-static {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-scroll {
+    display: none;
+  }
+
+  .story-static {
+    display: block;
+  }
+}
+
+html.story-force-static .story-scroll {
+  display: none;
+}
+
+html.story-force-static .story-static {
+  display: block;
+}
+
+/* Static fallback: each card sticks, and the next one slides up over it. */
+.story-stack {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-stack-card {
+  position: sticky;
+  top: calc(4.25rem + var(--stack) * 0.4rem);
+  z-index: calc(var(--stack) + 1);
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - 4.25rem - var(--stack) * 0.4rem);
+  min-height: calc(100dvh - 4.25rem - var(--stack) * 0.4rem);
+  background: var(--forest);
+  border-top: 1px solid color-mix(in srgb, var(--beige) 18%, transparent);
+  box-shadow: 0 -22px 40px rgba(0, 0, 0, 0.42);
+}
+
+.story-stack-face {
+  transform: scale(calc(1 - var(--cover, 0) * 0.08));
+  transform-origin: center top;
+  filter: brightness(calc(1 - var(--cover, 0) * 0.45));
+}
+
+.story-stack-art {
+  height: 28svh;
+  max-height: 13.5rem;
+  overflow: hidden;
+}
+
+.story-stack-art > * {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+@media (min-width: 768px) {
+  .story-stack-art {
+    height: auto;
+    max-height: none;
+  }
+
+  .story-stack-art > * {
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-stack-face {
+    transform: none;
+    filter: none;
+  }
+
+  .story-beat-copy,
+  .story-board-sweep,
+  .story-led-glow {
+    animation: none;
+  }
+}
+
+@keyframes story-orbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg) translateX(156px) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg) translateX(156px) rotate(-360deg);
+  }
+}
+
+.story-orbit {
+  animation: story-orbit 13s linear infinite;
+}
+
+@media (max-width: 767px) {
+  .story-orbit {
+    animation: none;
+    top: auto;
+    bottom: 42%;
+    transform: translateX(-50%);
+  }
+}
+
 .section-rule {
   height: 1px;
   background: linear-gradient(
