@@ -5,6 +5,7 @@
  *
  * Licenses: Unsplash License and Pexels License — free to use commercially,
  * no attribution required. Credits are recorded here anyway.
+ * Scroll-scrubbed stock video credits live in `media.ts`.
  *
  * - fibre-macro: Unsplash photo oe1d8v7Mds4, “Close-up of raw cotton fibers
  *   with dirt and debris”. https://unsplash.com/photos/oe1d8v7Mds4

@@ -7,6 +7,8 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA } from "@/components/story/copy";
 import { FrameArt } from "@/components/story/StoryFrames";
 import { StoryFallback } from "@/components/story/StoryFallback";
+import { StoryFilm, canPlayFilm } from "@/components/story/StoryFilm";
+import { boardShouldRender } from "@/components/story/media";
 import { copyIndex, proofIndex } from "@/components/story/timeline";
 
 const StoryCanvas = dynamic(
@@ -26,9 +28,13 @@ function hasWebGL() {
 export function StorySection() {
   const ref = useRef<HTMLElement>(null);
   const progressRef = useRef(0);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const [beat, setBeat] = useState(0);
   const [proof, setProof] = useState(-1);
   const [webgl, setWebgl] = useState(false);
+  const [film, setFilm] = useState(false);
+  const [boardLive, setBoardLive] = useState(true);
   const [near, setNear] = useState(false);
   const [ready, setReady] = useState(false);
   const { scrollYProgress } = useScroll({
@@ -43,15 +49,19 @@ export function StorySection() {
     setBeat((current) => (current === next ? current : next));
     const nextProof = proofIndex(value);
     setProof((current) => (current === nextProof ? current : nextProof));
+    const live = boardShouldRender(value);
+    setBoardLive((current) => (current === live ? current : live));
   });
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const apply = () => {
-      const allowed = !media.matches && hasWebGL();
-      setWebgl(allowed);
-      if (!allowed) setReady(false);
-      document.documentElement.classList.toggle("story-force-static", !allowed);
+      const reduced = media.matches;
+      const filmOk = !reduced && canPlayFilm();
+      setFilm(filmOk);
+      setWebgl(filmOk && hasWebGL());
+      if (!filmOk) setReady(false);
+      document.documentElement.classList.toggle("story-force-static", !filmOk);
     };
     apply();
     media.addEventListener("change", apply);
@@ -87,7 +97,7 @@ export function StorySection() {
         <h2 id="story-heading" className="sr-only">
           The Bisket story
         </h2>
-        <div className="story-stage sticky top-0 z-10 touch-pan-y overflow-hidden bg-forest">
+        <div ref={stageRef} className="story-stage sticky top-0 z-10 touch-pan-y overflow-hidden bg-forest">
           <div
             className={`absolute inset-0 transition-opacity duration-700 ${ready ? "opacity-0" : "opacity-100"}`}
             aria-hidden="true"
@@ -99,15 +109,20 @@ export function StorySection() {
 
           {webgl ? (
             <div
-              className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ${ready ? "opacity-100" : "opacity-0"}`}
+              ref={canvasRef}
+              className={`pointer-events-none absolute inset-0 ${ready ? "" : "opacity-0"}`}
               aria-hidden="true"
             >
-              <StoryCanvas progressRef={progressRef} active={near} onReady={() => setReady(true)} />
+              <StoryCanvas progressRef={progressRef} active={near && boardLive} onReady={() => setReady(true)} />
             </div>
           ) : null}
 
+          {film ? (
+            <StoryFilm progressRef={progressRef} canvasRef={canvasRef} stageRef={stageRef} canvasLive={ready} />
+          ) : null}
+
           <div className="pointer-events-none absolute inset-0 z-20 bg-[radial-gradient(ellipse_at_center,transparent_42%,rgba(8,16,12,0.55)_100%)]" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-1/2 bg-gradient-to-t from-forest via-forest/75 to-transparent sm:h-2/5 sm:via-forest/55" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[68%] bg-gradient-to-t from-forest via-forest/85 to-transparent sm:h-3/5 sm:via-forest/70" />
 
           <div className="pointer-events-none absolute inset-x-4 top-[max(4.25rem,env(safe-area-inset-top))] z-20 flex items-center justify-between sm:inset-x-6 sm:top-20 md:top-24 md:right-10 md:left-10">
             <p className="text-[11px] font-semibold tracking-[0.22em] text-lime uppercase">The loop</p>
@@ -130,9 +145,9 @@ export function StorySection() {
           ) : null}
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-10 md:px-12 md:pb-14">
-            <div key={beat} className="max-w-xl">
+            <div key={beat} className="story-beat-copy max-w-xl">
               <p className="text-xs font-semibold tracking-[0.22em] text-lime uppercase">{current.eyebrow}</p>
-              <p aria-live="polite" className="mt-3 text-[1.65rem] leading-[1.15] font-semibold tracking-tight text-balance text-beige sm:text-3xl md:text-5xl">
+              <p aria-live="polite" className="mt-3 text-[1.65rem] leading-[1.12] font-semibold tracking-tight text-balance text-beige drop-shadow-[0_2px_16px_rgba(0,0,0,0.72)] sm:text-3xl md:text-5xl">
                 {current.title}
               </p>
               {beat === 0 ? (
