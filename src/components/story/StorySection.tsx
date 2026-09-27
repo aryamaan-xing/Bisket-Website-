@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA } from "@/components/story/copy";
-import { BOARD_IMAGE } from "@/components/story/media";
+import { BOARD_ON } from "@/components/story/media";
 import { StoryFallback } from "@/components/story/StoryFallback";
 import { StoryFilm, canPlayFilm } from "@/components/story/StoryFilm";
 import { copyIndex, proofIndex } from "@/components/story/timeline";
@@ -83,11 +83,11 @@ export function StorySection() {
             aria-hidden="true"
           >
             <Image
-              src={BOARD_IMAGE}
+              src={BOARD_ON}
               alt=""
               fill
               sizes="100vw"
-              className="object-cover object-[62%_center]"
+              className="object-cover object-center"
             />
           </div>
 

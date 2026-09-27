@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA } from "@/components/story/copy";
-import { BOARD_IMAGE } from "@/components/story/media";
+import { BOARD_ON } from "@/components/story/media";
 import { FrameArt } from "@/components/story/StoryFrames";
 
 export function StoryFallback() {
@@ -74,12 +74,12 @@ export function StoryFallback() {
               <div className="story-stack-art">
                 {index === 0 || index === 5 || index === 8 ? (
                   <Image
-                    src={BOARD_IMAGE}
+                    src={BOARD_ON}
                     alt=""
-                    width={1280}
-                    height={720}
+                    width={1024}
+                    height={1024}
                     sizes="(min-width: 768px) 40vw, 100vw"
-                    className="h-full w-full object-cover object-[64%_42%]"
+                    className="h-full w-full object-cover object-center"
                   />
                 ) : (
                   <FrameArt beat={index} className="h-full" />

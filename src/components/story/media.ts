@@ -88,11 +88,32 @@ export function windowOpacity(progress: number, from: number, to: number, fade: 
   return Math.max(0, Math.min(1, inn * out));
 }
 
-/** Still of the biomass board. Focal points are fractions of the source image. */
-export const BOARD_IMAGE = "/images/hero-biomass-pcb.png";
-export const BOARD_SIZE = { width: 1280, height: 720 };
-/** Small green LED on the copper side of the board. */
-export const BOARD_LED = { x: 0.677, y: 0.349 };
+/** Lit biomass board. Opening and closing hero of the scroll story. */
+export const BOARD_ON = "/images/prototype-led.png";
+/** Same board with the LED off. Used while the LED switches on. */
+export const BOARD_OFF = "/images/product-pcb-board.png";
+/** Tall frames derived from the square photos so a phone shows the whole board. */
+export const BOARD_ON_PORTRAIT = "/images/prototype-led-portrait.webp";
+export const BOARD_OFF_PORTRAIT = "/images/product-pcb-portrait.webp";
+
+export const BOARD_SQUARE = { width: 1024, height: 1024 };
+export const BOARD_PORTRAIT = { width: 1080, height: 1920 };
+/** White-hot LED on the lit photo, as a fraction of that image. */
+export const BOARD_LED = { x: 0.583, y: 0.426 };
+export const BOARD_LED_PORTRAIT = { x: 0.575, y: 0.462 };
+
+export function boardAsset(portrait: boolean) {
+  if (portrait) {
+    return { ...BOARD_PORTRAIT, on: BOARD_ON_PORTRAIT, off: BOARD_OFF_PORTRAIT, led: BOARD_LED_PORTRAIT };
+  }
+  return { ...BOARD_SQUARE, on: BOARD_ON, off: BOARD_OFF, led: BOARD_LED };
+}
+
+/** Lit-board amount. The close fades the LED on as the still returns. */
+export function ledOnAmount(progress: number) {
+  if (progress > 0.84) return smoothstep(0.9, 0.975, progress);
+  return 1;
+}
 
 export type PlateFrame = { x: number; y: number; zoom: number };
 
@@ -105,33 +126,34 @@ function mixFrame(a: PlateFrame, b: PlateFrame, t: number): PlateFrame {
 }
 
 /**
- * Ken Burns frame. Wide screens open on the whole still. Portrait screens
- * open on the board, then both push into the fibre pile on the left and
- * pull back to that same opening frame.
+ * Ken Burns frame. Wide screens crop the square photo through the middle of
+ * the board. Portrait screens use the tall extension and open on the whole
+ * board, then both push into the laminate texture and pull back to that
+ * same opening frame.
  */
 export function plateFrame(progress: number, aspect = 1): PlateFrame {
   const wide = aspect >= 1;
-  const open = wide ? { x: 0.5, y: 0.48, zoom: 1.02 } : { x: 0.72, y: 0.42, zoom: 1.06 };
-  const fibre = { x: 0.16, y: 0.46, zoom: wide ? 2.35 : 2.85 };
-  const proof = wide ? { x: 0.62, y: 0.44, zoom: 1.22 } : { x: 0.72, y: 0.4, zoom: 1.16 };
-  if (progress < 0.16) return mixFrame(open, fibre, smoothstep(0.025, 0.15, progress));
+  const open = wide ? { x: 0.5, y: 0.48, zoom: 1.12 } : { x: 0.5, y: 0.5, zoom: 1.04 };
+  const fibre = wide ? { x: 0.36, y: 0.68, zoom: 2.45 } : { x: 0.373, y: 0.592, zoom: 2.7 };
+  const proof = wide ? { x: 0.54, y: 0.46, zoom: 1.32 } : { x: 0.56, y: 0.47, zoom: 1.24 };
+  if (progress < 0.18) return mixFrame(open, fibre, smoothstep(0.04, 0.145, progress));
   if (progress < 0.86) {
     const drift = smoothstep(0.56, 0.74, progress);
-    return mixFrame(proof, { x: proof.x + 0.03, y: proof.y, zoom: proof.zoom + 0.08 }, drift * 0.45);
+    return mixFrame(proof, { x: proof.x + 0.02, y: proof.y, zoom: proof.zoom + 0.06 }, drift * 0.45);
   }
   return mixFrame(fibre, open, smoothstep(0.86, 0.97, progress));
 }
 
 /** How much of the still shows through the footage. */
 export function plateOpacity(progress: number) {
-  const open = 1 - smoothstep(0.1, 0.17, progress);
+  const open = 1 - smoothstep(0.135, 0.2, progress);
   const proof = smoothstep(0.55, 0.63, progress) * (1 - smoothstep(0.72, 0.8, progress));
   const close = smoothstep(0.88, 0.96, progress);
   return Math.max(open, proof, close);
 }
 
 export function plateBlur(progress: number) {
-  const intoFibre = smoothstep(0.11, 0.17, progress) * (1 - smoothstep(0.17, 0.24, progress));
+  const intoFibre = smoothstep(0.145, 0.19, progress) * (1 - smoothstep(0.19, 0.26, progress));
   const outOfSoil = smoothstep(0.86, 0.91, progress) * (1 - smoothstep(0.93, 0.98, progress));
   return (intoFibre + outOfSoil) * 14;
 }

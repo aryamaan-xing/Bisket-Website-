@@ -2,12 +2,11 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import {
-  BOARD_IMAGE,
-  BOARD_LED,
-  BOARD_SIZE,
   FILM_CLIPS,
+  boardAsset,
   clipLocalTime,
   clipSource,
+  ledOnAmount,
   plateBlur,
   plateFrame,
   plateOpacity,
@@ -91,10 +90,12 @@ export function StoryFilm({
   const layers = useRef<Array<HTMLDivElement | null>>([]);
   const leakRef = useRef<HTMLDivElement>(null);
   const plateRef = useRef<HTMLDivElement>(null);
-  const photoRef = useRef<HTMLImageElement>(null);
+  const offRef = useRef<HTMLImageElement>(null);
+  const onRef = useRef<HTMLImageElement>(null);
   const ledRef = useRef<HTMLDivElement>(null);
   const prefs = useRef({ mobile: false, webm: false, loop: false });
   const seekMiss = useRef(0);
+  const igniteAt = useRef(0);
   const activeRef = useRef(active);
 
   useEffect(() => {
@@ -102,7 +103,7 @@ export function StoryFilm({
   }, [active]);
 
   useEffect(() => {
-    const photo = photoRef.current;
+    const photo = onRef.current;
     if (photo?.complete && photo.naturalWidth > 0) onReady();
   }, [onReady]);
 
@@ -204,32 +205,54 @@ export function StoryFilm({
       }
 
       const plate = plateRef.current;
-      const photo = photoRef.current;
+      const off = offRef.current;
+      const on = onRef.current;
       const led = ledRef.current;
-      if (plate && photo) {
+      if (plate && off && on) {
         const opacity = plateOpacity(progress);
         const viewW = plate.clientWidth;
         const viewH = plate.clientHeight;
         if (viewW < 2 || viewH < 2) return;
+        const portrait = viewW / viewH < 1;
+        const asset = boardAsset(portrait);
+        if (off.dataset.board !== asset.off) {
+          off.dataset.board = asset.off;
+          off.src = asset.off;
+        }
+        if (on.dataset.board !== asset.on) {
+          on.dataset.board = asset.on;
+          on.src = asset.on;
+        }
         const frame = plateFrame(progress, viewW / viewH);
-        const cover = Math.max(viewW / BOARD_SIZE.width, viewH / BOARD_SIZE.height) * frame.zoom;
-        const width = BOARD_SIZE.width * cover;
-        const height = BOARD_SIZE.height * cover;
+        const cover = Math.max(viewW / asset.width, viewH / asset.height) * frame.zoom;
+        const width = asset.width * cover;
+        const height = asset.height * cover;
         const left = Math.min(0, Math.max(viewW - width, viewW / 2 - frame.x * width));
         const top = Math.min(0, Math.max(viewH - height, viewH / 2 - frame.y * height));
-        photo.style.width = `${width}px`;
-        photo.style.height = `${height}px`;
-        photo.style.left = `${left}px`;
-        photo.style.top = `${top}px`;
-        photo.style.transform = "none";
+        for (const photo of [off, on]) {
+          photo.style.width = `${width}px`;
+          photo.style.height = `${height}px`;
+          photo.style.left = `${left}px`;
+          photo.style.top = `${top}px`;
+          photo.style.transform = "none";
+        }
+        let lit = ledOnAmount(progress);
+        if (progress < 0.08) {
+          const now = performance.now();
+          if (igniteAt.current === 0) igniteAt.current = now;
+          lit = Math.min(1, (now - igniteAt.current) / 900);
+        } else if (progress > 0.45) {
+          igniteAt.current = 0;
+        }
+        on.style.opacity = lit.toFixed(3);
         const blur = plateBlur(progress);
         plate.style.opacity = opacity.toFixed(3);
         plate.style.visibility = opacity < 0.01 ? "hidden" : "visible";
         plate.style.filter = blur > 0.4 ? `blur(${blur.toFixed(1)}px)` : "none";
         if (led) {
-          const ledX = left + BOARD_LED.x * width;
-          const ledY = top + BOARD_LED.y * height;
-          const onScreen = ledX > -30 && ledY > -30 && ledX < viewW + 30 && ledY < viewH + 30 && opacity > 0.35;
+          const ledX = left + asset.led.x * width;
+          const ledY = top + asset.led.y * height;
+          const onScreen = ledX > -30 && ledY > -30 && ledX < viewW + 30 && ledY < viewH + 30 && opacity > 0.35 && lit > 0.45;
           led.style.left = `${ledX}px`;
           led.style.top = `${ledY}px`;
           led.style.opacity = onScreen ? "" : "0";
@@ -251,13 +274,9 @@ export function StoryFilm({
     <div className="pointer-events-none absolute inset-0 z-[1]" aria-hidden="true">
       <div ref={plateRef} className="story-board">
         {/* eslint-disable-next-line @next/next/no-img-element -- sized every frame for the Ken Burns pan */}
-        <img
-          ref={photoRef}
-          src={BOARD_IMAGE}
-          alt=""
-          draggable={false}
-          onLoad={onReady}
-        />
+        <img ref={offRef} src={boardAsset(false).off} alt="" draggable={false} />
+        {/* eslint-disable-next-line @next/next/no-img-element -- sized every frame for the Ken Burns pan */}
+        <img ref={onRef} src={boardAsset(false).on} alt="" draggable={false} onLoad={onReady} />
         <div className="story-board-sweep" />
         <div ref={ledRef} className="story-led-glow" />
       </div>
