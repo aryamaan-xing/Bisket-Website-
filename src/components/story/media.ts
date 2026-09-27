@@ -90,14 +90,14 @@ export function windowOpacity(progress: number, from: number, to: number, fade: 
 
 /** How much of the 3D board should show through the film. */
 export function boardLayerOpacity(progress: number) {
-  const open = 1 - smoothstep(0.07, 0.17, progress);
+  const open = 1 - smoothstep(0.035, 0.11, progress);
   const proof = smoothstep(0.55, 0.63, progress) * (1 - smoothstep(0.72, 0.8, progress));
   const close = smoothstep(0.9, 0.965, progress);
   return Math.max(open, proof, close);
 }
 
 export function boardShouldRender(progress: number) {
-  return progress < 0.2 || (progress > 0.52 && progress < 0.83) || progress > 0.87;
+  return progress < 0.14 || (progress > 0.52 && progress < 0.83) || progress > 0.87;
 }
 
 export function clipLocalTime(progress: number, clip: FilmClip, duration: number) {
