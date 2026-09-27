@@ -97,11 +97,74 @@ body {
   touch-action: pan-y;
 }
 
-/* The canvas must not steal vertical pans on iOS Safari or Android Chrome. */
-.story-stage canvas,
-.story-stage video {
+.story-stage video,
+.story-stage img {
   touch-action: pan-y !important;
   pointer-events: none !important;
+}
+
+.story-board {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #07110d;
+}
+
+.story-board img {
+  position: absolute;
+  width: 168%;
+  height: 168%;
+  max-width: none;
+  left: 58%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.story-board-sweep {
+  position: absolute;
+  inset: -10%;
+  background: linear-gradient(112deg, transparent 38%, rgba(255, 244, 214, 0.42) 50%, transparent 62%);
+  mix-blend-mode: soft-light;
+  animation: story-sweep 8.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.story-led-glow {
+  position: absolute;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(190, 245, 40, 0.95) 0%, rgba(160, 220, 30, 0.45) 22%, transparent 68%);
+  mix-blend-mode: screen;
+  animation: story-led 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes story-sweep {
+  0%,
+  35% {
+    transform: translateX(-55%);
+  }
+
+  68%,
+  100% {
+    transform: translateX(55%);
+  }
+}
+
+@keyframes story-led {
+  0%,
+  100% {
+    opacity: 0.4;
+    filter: blur(0);
+  }
+
+  50% {
+    opacity: 1;
+    filter: blur(1px);
+  }
 }
 
 .story-film-layer {
@@ -230,7 +293,9 @@ html.story-force-static .story-static {
     filter: none;
   }
 
-  .story-beat-copy {
+  .story-beat-copy,
+  .story-board-sweep,
+  .story-led-glow {
     animation: none;
   }
 }

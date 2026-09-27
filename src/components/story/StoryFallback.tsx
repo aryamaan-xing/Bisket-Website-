@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA } from "@/components/story/copy";
+import { BOARD_IMAGE } from "@/components/story/media";
 import { FrameArt } from "@/components/story/StoryFrames";
 
 export function StoryFallback() {
@@ -70,7 +72,18 @@ export function StoryFallback() {
           >
             <div className="story-stack-face mx-auto grid w-full max-w-6xl items-center gap-5 px-5 py-8 sm:gap-8 sm:px-8 sm:py-12 md:grid-cols-2 md:gap-12">
               <div className="story-stack-art">
-                <FrameArt beat={index} className="h-full" />
+                {index === 0 || index === 5 || index === 8 ? (
+                  <Image
+                    src={BOARD_IMAGE}
+                    alt=""
+                    width={1280}
+                    height={720}
+                    sizes="(min-width: 768px) 40vw, 100vw"
+                    className="h-full w-full object-cover object-[64%_42%]"
+                  />
+                ) : (
+                  <FrameArt beat={index} className="h-full" />
+                )}
               </div>
               <div>
                 <p className="text-xs font-semibold tracking-[0.22em] text-lime uppercase">

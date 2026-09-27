@@ -1,42 +1,25 @@
 "use client";
 
 import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PROOF_CALLOUTS, STORY_BEATS, STORY_CTA } from "@/components/story/copy";
-import { FrameArt } from "@/components/story/StoryFrames";
+import { BOARD_IMAGE } from "@/components/story/media";
 import { StoryFallback } from "@/components/story/StoryFallback";
 import { StoryFilm, canPlayFilm } from "@/components/story/StoryFilm";
-import { boardShouldRender } from "@/components/story/media";
 import { copyIndex, proofIndex } from "@/components/story/timeline";
-
-const StoryCanvas = dynamic(
-  () => import("@/components/story/StoryCanvas").then((mod) => mod.StoryCanvas),
-  { ssr: false },
-);
-
-function hasWebGL() {
-  try {
-    const canvas = document.createElement("canvas");
-    return Boolean(canvas.getContext("webgl2") || canvas.getContext("webgl"));
-  } catch {
-    return false;
-  }
-}
 
 export function StorySection() {
   const ref = useRef<HTMLElement>(null);
   const progressRef = useRef(0);
-  const canvasRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const [beat, setBeat] = useState(0);
   const [proof, setProof] = useState(-1);
-  const [webgl, setWebgl] = useState(false);
   const [film, setFilm] = useState(false);
-  const [boardLive, setBoardLive] = useState(true);
   const [near, setNear] = useState(false);
   const [ready, setReady] = useState(false);
+  const markReady = useCallback(() => setReady(true), []);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
@@ -49,8 +32,6 @@ export function StorySection() {
     setBeat((current) => (current === next ? current : next));
     const nextProof = proofIndex(value);
     setProof((current) => (current === nextProof ? current : nextProof));
-    const live = boardShouldRender(value);
-    setBoardLive((current) => (current === live ? current : live));
   });
 
   useEffect(() => {
@@ -59,7 +40,6 @@ export function StorySection() {
       const reduced = media.matches;
       const filmOk = !reduced && canPlayFilm();
       setFilm(filmOk);
-      setWebgl(filmOk && hasWebGL());
       if (!filmOk) setReady(false);
       document.documentElement.classList.toggle("story-force-static", !filmOk);
     };
@@ -99,27 +79,19 @@ export function StorySection() {
         </h2>
         <div ref={stageRef} className="story-stage sticky top-0 z-10 touch-pan-y overflow-hidden bg-forest">
           <div
-            className={`absolute inset-0 transition-opacity duration-700 ${ready ? "opacity-0" : "opacity-100"}`}
+            className={`absolute inset-0 ${ready ? "opacity-0" : "opacity-100"}`}
             aria-hidden="true"
           >
-            <div className="flex h-full items-center justify-center px-6">
-              <FrameArt beat={0} className="w-full max-w-xl shadow-[0_0_80px_rgba(180,240,27,0.18)]" />
-            </div>
+            <Image
+              src={BOARD_IMAGE}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover object-[62%_center]"
+            />
           </div>
 
-          {webgl ? (
-            <div
-              ref={canvasRef}
-              className={`pointer-events-none absolute inset-0 ${ready ? "" : "opacity-0"}`}
-              aria-hidden="true"
-            >
-              <StoryCanvas progressRef={progressRef} active={near && boardLive} onReady={() => setReady(true)} />
-            </div>
-          ) : null}
-
-          {film ? (
-            <StoryFilm progressRef={progressRef} canvasRef={canvasRef} stageRef={stageRef} canvasLive={ready} />
-          ) : null}
+          {film ? <StoryFilm progressRef={progressRef} stageRef={stageRef} active={near} onReady={markReady} /> : null}
 
           <div className="pointer-events-none absolute inset-0 z-20 bg-[radial-gradient(ellipse_at_center,transparent_42%,rgba(8,16,12,0.55)_100%)]" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[68%] bg-gradient-to-t from-forest via-forest/85 to-transparent sm:h-3/5 sm:via-forest/70" />

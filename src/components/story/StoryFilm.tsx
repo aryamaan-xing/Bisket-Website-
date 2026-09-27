@@ -2,10 +2,15 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import {
+  BOARD_IMAGE,
+  BOARD_LED,
+  BOARD_SIZE,
   FILM_CLIPS,
-  boardLayerOpacity,
   clipLocalTime,
   clipSource,
+  plateBlur,
+  plateFrame,
+  plateOpacity,
   windowOpacity,
   type FilmClip,
 } from "@/components/story/media";
@@ -73,25 +78,33 @@ function layerStyle(progress: number, clip: FilmClip) {
 
 export function StoryFilm({
   progressRef,
-  canvasRef,
   stageRef,
-  canvasLive,
+  active,
+  onReady,
 }: {
   progressRef: RefObject<number>;
-  canvasRef: RefObject<HTMLDivElement | null>;
   stageRef: RefObject<HTMLDivElement | null>;
-  canvasLive: boolean;
+  active: boolean;
+  onReady: () => void;
 }) {
   const videos = useRef<Array<HTMLVideoElement | null>>([]);
   const layers = useRef<Array<HTMLDivElement | null>>([]);
   const leakRef = useRef<HTMLDivElement>(null);
+  const plateRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLImageElement>(null);
+  const ledRef = useRef<HTMLDivElement>(null);
   const prefs = useRef({ mobile: false, webm: false, loop: false });
   const seekMiss = useRef(0);
-  const canvasLiveRef = useRef(canvasLive);
+  const activeRef = useRef(active);
 
   useEffect(() => {
-    canvasLiveRef.current = canvasLive;
-  }, [canvasLive]);
+    activeRef.current = active;
+  }, [active]);
+
+  useEffect(() => {
+    const photo = photoRef.current;
+    if (photo?.complete && photo.naturalWidth > 0) onReady();
+  }, [onReady]);
 
   useEffect(() => {
     const mobileQuery = window.matchMedia("(max-width: 767px)");
@@ -109,6 +122,7 @@ export function StoryFilm({
     const tick = () => {
       if (!running) return;
       frame = window.requestAnimationFrame(tick);
+      if (!activeRef.current) return;
       const progress = progressRef.current;
       const { mobile, webm, loop } = prefs.current;
       let dominant = "";
@@ -189,8 +203,38 @@ export function StoryFilm({
         leak.style.opacity = Math.min(0.9, fibreField * 0.75 + fieldFire * 0.85).toFixed(3);
       }
 
-      const canvas = canvasRef.current;
-      if (canvas && canvasLiveRef.current) canvas.style.opacity = boardLayerOpacity(progress).toFixed(3);
+      const plate = plateRef.current;
+      const photo = photoRef.current;
+      const led = ledRef.current;
+      if (plate && photo) {
+        const opacity = plateOpacity(progress);
+        const viewW = plate.clientWidth;
+        const viewH = plate.clientHeight;
+        if (viewW < 2 || viewH < 2) return;
+        const frame = plateFrame(progress, viewW / viewH);
+        const cover = Math.max(viewW / BOARD_SIZE.width, viewH / BOARD_SIZE.height) * frame.zoom;
+        const width = BOARD_SIZE.width * cover;
+        const height = BOARD_SIZE.height * cover;
+        const left = Math.min(0, Math.max(viewW - width, viewW / 2 - frame.x * width));
+        const top = Math.min(0, Math.max(viewH - height, viewH / 2 - frame.y * height));
+        photo.style.width = `${width}px`;
+        photo.style.height = `${height}px`;
+        photo.style.left = `${left}px`;
+        photo.style.top = `${top}px`;
+        photo.style.transform = "none";
+        const blur = plateBlur(progress);
+        plate.style.opacity = opacity.toFixed(3);
+        plate.style.visibility = opacity < 0.01 ? "hidden" : "visible";
+        plate.style.filter = blur > 0.4 ? `blur(${blur.toFixed(1)}px)` : "none";
+        if (led) {
+          const ledX = left + BOARD_LED.x * width;
+          const ledY = top + BOARD_LED.y * height;
+          const onScreen = ledX > -30 && ledY > -30 && ledX < viewW + 30 && ledY < viewH + 30 && opacity > 0.35;
+          led.style.left = `${ledX}px`;
+          led.style.top = `${ledY}px`;
+          led.style.opacity = onScreen ? "" : "0";
+        }
+      }
       const stage = stageRef.current;
       if (stage) stage.dataset.film = dominant;
     };
@@ -201,10 +245,22 @@ export function StoryFilm({
       window.cancelAnimationFrame(frame);
       mobileQuery.removeEventListener("change", onMobile);
     };
-  }, [canvasRef, progressRef, stageRef]);
+  }, [progressRef, stageRef]);
 
   return (
     <div className="pointer-events-none absolute inset-0 z-[1]" aria-hidden="true">
+      <div ref={plateRef} className="story-board">
+        {/* eslint-disable-next-line @next/next/no-img-element -- sized every frame for the Ken Burns pan */}
+        <img
+          ref={photoRef}
+          src={BOARD_IMAGE}
+          alt=""
+          draggable={false}
+          onLoad={onReady}
+        />
+        <div className="story-board-sweep" />
+        <div ref={ledRef} className="story-led-glow" />
+      </div>
       {FILM_CLIPS.map((clip, index) => (
         <div
           key={clip.id}

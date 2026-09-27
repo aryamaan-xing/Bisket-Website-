@@ -71,15 +71,15 @@ const film = (id: string, duration: number) => ({
 });
 
 export const FILM_CLIPS: readonly FilmClip[] = [
-  { id: "stalks", from: 0.055, to: 0.2, fade: 0.04, enter: "zoom", ...film("stalks", 3.208) },
-  { id: "drygrass", from: 0.15, to: 0.275, fade: 0.04, enter: "blur", ...film("drygrass", 3.417) },
+  { id: "stalks", from: 0.1, to: 0.21, fade: 0.04, enter: "zoom", ...film("stalks", 3.208) },
+  { id: "drygrass", from: 0.16, to: 0.275, fade: 0.04, enter: "blur", ...film("drygrass", 3.417) },
   { id: "flare", from: 0.175, to: 0.29, fade: 0.035, enter: "flare", leak: true, ...film("flare", 1.833) },
   { id: "fire", from: 0.22, to: 0.34, fade: 0.04, enter: "flare", ...film("fire", 3.208) },
   { id: "rice", from: 0.3, to: 0.425, fade: 0.04, enter: "dissolve", ...film("rice", 3.625) },
   { id: "sheet", from: 0.385, to: 0.515, fade: 0.04, enter: "mask", ...film("sheet", 3.208) },
   { id: "circuit", from: 0.475, to: 0.615, fade: 0.045, enter: "zoom", ...film("circuit", 3.417) },
   { id: "waste", from: 0.71, to: 0.845, fade: 0.045, enter: "dissolve", ...film("waste", 3.417) },
-  { id: "soil", from: 0.8, to: 0.945, fade: 0.045, enter: "blur", ...film("soil", 3.625) },
+  { id: "soil", from: 0.8, to: 0.92, fade: 0.045, enter: "blur", ...film("soil", 3.625) },
 ];
 
 export function windowOpacity(progress: number, from: number, to: number, fade: number) {
@@ -88,16 +88,52 @@ export function windowOpacity(progress: number, from: number, to: number, fade: 
   return Math.max(0, Math.min(1, inn * out));
 }
 
-/** How much of the 3D board should show through the film. */
-export function boardLayerOpacity(progress: number) {
-  const open = 1 - smoothstep(0.035, 0.11, progress);
+/** Still of the biomass board. Focal points are fractions of the source image. */
+export const BOARD_IMAGE = "/images/hero-biomass-pcb.png";
+export const BOARD_SIZE = { width: 1280, height: 720 };
+/** Small green LED on the copper side of the board. */
+export const BOARD_LED = { x: 0.677, y: 0.349 };
+
+export type PlateFrame = { x: number; y: number; zoom: number };
+
+function mixFrame(a: PlateFrame, b: PlateFrame, t: number): PlateFrame {
+  return {
+    x: a.x + (b.x - a.x) * t,
+    y: a.y + (b.y - a.y) * t,
+    zoom: a.zoom + (b.zoom - a.zoom) * t,
+  };
+}
+
+/**
+ * Ken Burns frame. Wide screens open on the whole still. Portrait screens
+ * open on the board, then both push into the fibre pile on the left and
+ * pull back to that same opening frame.
+ */
+export function plateFrame(progress: number, aspect = 1): PlateFrame {
+  const wide = aspect >= 1;
+  const open = wide ? { x: 0.5, y: 0.48, zoom: 1.02 } : { x: 0.72, y: 0.42, zoom: 1.06 };
+  const fibre = { x: 0.16, y: 0.46, zoom: wide ? 2.35 : 2.85 };
+  const proof = wide ? { x: 0.62, y: 0.44, zoom: 1.22 } : { x: 0.72, y: 0.4, zoom: 1.16 };
+  if (progress < 0.16) return mixFrame(open, fibre, smoothstep(0.025, 0.15, progress));
+  if (progress < 0.86) {
+    const drift = smoothstep(0.56, 0.74, progress);
+    return mixFrame(proof, { x: proof.x + 0.03, y: proof.y, zoom: proof.zoom + 0.08 }, drift * 0.45);
+  }
+  return mixFrame(fibre, open, smoothstep(0.86, 0.97, progress));
+}
+
+/** How much of the still shows through the footage. */
+export function plateOpacity(progress: number) {
+  const open = 1 - smoothstep(0.1, 0.17, progress);
   const proof = smoothstep(0.55, 0.63, progress) * (1 - smoothstep(0.72, 0.8, progress));
-  const close = smoothstep(0.9, 0.965, progress);
+  const close = smoothstep(0.88, 0.96, progress);
   return Math.max(open, proof, close);
 }
 
-export function boardShouldRender(progress: number) {
-  return progress < 0.14 || (progress > 0.52 && progress < 0.83) || progress > 0.87;
+export function plateBlur(progress: number) {
+  const intoFibre = smoothstep(0.11, 0.17, progress) * (1 - smoothstep(0.17, 0.24, progress));
+  const outOfSoil = smoothstep(0.86, 0.91, progress) * (1 - smoothstep(0.93, 0.98, progress));
+  return (intoFibre + outOfSoil) * 14;
 }
 
 export function clipLocalTime(progress: number, clip: FilmClip, duration: number) {
