@@ -6,16 +6,15 @@ import "./globals.css";
 const raleway = Raleway({
   variable: "--font-raleway",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bisketlabs.com";
 
-const title = "Bisket Labs — Circuit boards, made from crop residue";
+const title = "Bisket Labs — A next-generation FR-4 alternative";
 const description =
-  "Bisket Labs makes a bio-based PCB laminate platform from crop residue: halogen-free UL94 V-0, no glass fibre, lighter than FR-4, designed for a controlled end-of-life. Founded by IIT Madras and NUS alumni.";
+  "Bio-based PCB laminate for circular electronics manufacturing, made from crop residue. Designed to run on existing FR-4 lines; halogen-free UL94 V-0, Tg 262 °C. Founded by IIT Madras and NUS alumni.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -25,11 +24,14 @@ export const metadata: Metadata = {
   },
   description,
   applicationName: "Bisket Labs",
+  alternates: { canonical: "/" },
   keywords: [
     "bio-based PCB substrate",
     "sustainable PCB laminate",
     "agricultural biomass electronics",
     "FR-4 alternative",
+    "PCB fabricator laminate trial",
+    "low-power PCB substrate",
     "bio-based PCB laminate",
     "halogen-free PCB laminate",
     "UL94 V-0 bio-based laminate",

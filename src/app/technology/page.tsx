@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ButtonLink } from "@/components/ButtonLink";
+import { QualificationRoadmap, Resources } from "@/components/FabricatorSections";
 import { Reveal } from "@/components/Reveal";
 import { specs } from "@/lib/specs";
 
@@ -14,7 +15,7 @@ const moments = [
   },
   {
     title: "A platform, shipping single-layer first",
-    line: "Single-layer boards available now for low-power electronics: toys and STEM kits, medical disposables and IoT. Multilayer in development. Qualified application by application.",
+    line: "Single-layer boards available now for low-power electronics: LED lighting, IoT devices and wearables. Multilayer in development. Qualified application by application.",
   },
 ];
 
@@ -32,7 +33,8 @@ export default function TechnologyPage() {
           src="/images/product-resin-laminate.png"
           alt="Bio-based resin and laminate"
           fill
-          priority
+          loading="eager"
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover opacity-55"
         />
@@ -63,15 +65,15 @@ export default function TechnologyPage() {
             <ul className="mt-8 space-y-5">
               <li className="border-l-2 border-lime pl-4">
                 <p className="font-semibold text-forest">Single-layer boards: available now</p>
-                <p className="mt-1 text-sm text-forest/65">Working prototypes running real circuits</p>
+                <p className="mt-1 text-sm text-forest/75">Working prototypes running real circuits</p>
               </li>
               <li className="border-l-2 border-purple pl-4">
                 <p className="font-semibold text-forest">Multilayer: in development</p>
-                <p className="mt-1 text-sm text-forest/65">Early builds, under development</p>
+                <p className="mt-1 text-sm text-forest/75">Early builds, under development</p>
               </li>
               <li className="border-l-2 border-forest/30 pl-4">
                 <p className="font-semibold text-forest">~84% organic by volume</p>
-                <p className="mt-1 text-sm text-forest/65">Lignocellulosic resin, no glass fibre</p>
+                <p className="mt-1 text-sm text-forest/75">Lignocellulosic resin, no glass fibre</p>
               </li>
             </ul>
           </Reveal>
@@ -184,6 +186,9 @@ export default function TechnologyPage() {
           </div>
         </div>
       </section>
+
+      <QualificationRoadmap />
+      <Resources />
 
       <section className="relative overflow-hidden bg-forest">
         <Image

@@ -31,7 +31,7 @@ export function ImpactCards() {
   return (
     <section className="bg-ink text-beige" aria-labelledby="impact-heading">
       <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-lime">Why it matters</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-lime">Also better for the planet</p>
         <h2
           id="impact-heading"
           className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl"
@@ -45,7 +45,7 @@ export function ImpactCards() {
         <ul className="mt-12 grid gap-px bg-beige/10 sm:grid-cols-2 lg:grid-cols-3">
           {impact.map((item, i) => (
             <li key={item.title} className="bg-ink p-6 md:p-8">
-              <span className="text-xs font-semibold tabular-nums text-purple-soft">
+              <span className="text-xs font-semibold tabular-nums text-lime">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-3 text-lg font-semibold text-beige">{item.title}</h3>

@@ -4,7 +4,7 @@ import { Reveal } from "@/components/Reveal";
 export const metadata = {
   title: "Contact us",
   description:
-    "Evaluate a bio-based PCB laminate for your product. Contact Bisket Labs: OEMs, PCB manufacturers and investors.",
+    "Request a side-by-side trial of a bio-based FR-4 alternative on your line, or ask for whitepapers and reliability test results. Contact Bisket Labs.",
 };
 
 export default function ContactPage() {
@@ -19,9 +19,10 @@ export default function ContactPage() {
             Let&apos;s put your next board on biomass.
           </h1>
           <p className="mt-5 max-w-sm text-base font-light leading-relaxed text-forest/70">
-            OEMs, PCB manufacturers and investors: tell us about your board. Single-layer
-            is available now for low-power products like toys, STEM kits, medical
-            disposables and IoT. We&apos;ll share evaluation details privately.
+            PCB fabricators, OEMs and investors: tell us about your board. Single-layer
+            is available now for low-power electronics such as LED lighting, IoT and
+            wearables. Ask about a side-by-side trial on your line, or request our
+            whitepaper and reliability test results.
           </p>
 
           <div className="mt-10 space-y-6 text-sm">
