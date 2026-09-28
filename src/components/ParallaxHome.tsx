@@ -12,6 +12,7 @@ import { useRef } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ShiftInfographic } from "@/components/ShiftInfographic";
 import { HomeSpecs, ImpactCards } from "@/components/HomeSections";
+import { BuyerConcerns, QualificationRoadmap } from "@/components/FabricatorSections";
 
 const recognition = [
   "K-Tech Elevate",
@@ -32,6 +33,7 @@ export function ParallaxHome() {
   return (
     <div className="bg-beige">
       <Hero reduce={!!reduce} />
+      <BuyerConcerns id="home-evaluation" />
       <ImpactChapter
         reduce={!!reduce}
         eyebrow="Impact"
@@ -54,6 +56,7 @@ export function ParallaxHome() {
       <Transformation reduce={!!reduce} />
       <HomeSpecs />
       <ProductReveal reduce={!!reduce} />
+      <QualificationRoadmap id="home-qualification" />
       <Proof />
       <ClosingCta />
     </div>
@@ -80,7 +83,8 @@ function Hero({ reduce }: { reduce: boolean }) {
           src="/images/hero-biomass-pcb.png"
           alt="Agricultural biomass beside a bio-based PCB substrate"
           fill
-          priority
+          loading="eager"
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover object-center"
         />
@@ -96,23 +100,24 @@ function Hero({ reduce }: { reduce: boolean }) {
           <Image
             src="/logo-light.png"
             alt="Bisket Labs"
-            width={280}
-            height={42}
+            width={323}
+            height={48}
+            sizes="323px"
             className="mb-8 h-10 w-auto md:h-12"
-            priority
+            loading="eager"
           />
           <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight text-beige md:text-5xl lg:text-6xl">
-            Circuit boards, made from crop residue.
+            A next-generation FR-4 alternative.
           </h1>
           <p className="mt-5 max-w-md text-base font-light leading-relaxed text-beige/80 md:text-lg">
-            A bio-based PCB laminate platform: halogen-free UL94 V-0, no glass fibre,
-            lighter than FR-4 and designed for a controlled end-of-life. Founded by IIT
-            Madras and NUS alumni.
+            Bio-based laminate for circular electronics manufacturing, made from crop
+            residue. Designed to run on existing FR-4 lines with no new capex or
+            retraining, and halogen-free UL94 V-0. Founded by IIT Madras and NUS alumni.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink href="/contact">Evaluate for your board</ButtonLink>
-            <ButtonLink href="/technology" variant="secondary">
-              How it works
+            <ButtonLink href="/contact">Request a trial on your line</ButtonLink>
+            <ButtonLink href="/fabricators" variant="secondary">
+              For PCB fabricators
             </ButtonLink>
           </div>
         </div>
@@ -280,9 +285,9 @@ function ProductReveal({ reduce }: { reduce: boolean }) {
           From lab resin to working boards.
         </h2>
         <p className="mt-4 max-w-md text-sm font-light text-beige/75 md:text-base">
-          Available now: single-layer boards for low-power electronics — toys and STEM
-          kits, medical disposables, IoT. Multilayer in development. Processed with PCB
-          fabrication partners in Bengaluru and Chennai.
+          Available now: single-layer boards for low-power electronics such as LED
+          lighting, IoT devices and wearables. Multilayer in development. Processed with
+          PCB fabrication partners in Bengaluru and Chennai.
         </p>
       </div>
     </section>
@@ -323,10 +328,16 @@ function ClosingCta() {
           </p>
           <p className="mt-3 text-2xl font-semibold text-forest">Bengaluru · Chennai</p>
           <p className="mt-3 max-w-sm text-sm text-forest/65">
-            OEMs, PCB manufacturers and investors — let&apos;s qualify your next board on biomass together.
+            PCB fabricators and OEMs: let&apos;s run a side-by-side trial on your line.
+            Whitepapers and test results are available on request.
           </p>
         </div>
-        <ButtonLink href="/contact">Start an evaluation</ButtonLink>
+        <div className="flex flex-wrap gap-3">
+          <ButtonLink href="/contact">Request a trial</ButtonLink>
+          <ButtonLink href="/fabricators#resources" variant="ghost">
+            Resources
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );

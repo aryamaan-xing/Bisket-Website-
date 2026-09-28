@@ -7,6 +7,7 @@ import { useState } from "react";
 
 const links = [
   { href: "/", label: "Home" },
+  { href: "/fabricators", label: "For fabricators" },
   { href: "/technology", label: "Our technology" },
   { href: "/team", label: "Our team" },
   { href: "/contact", label: "Contact us" },
@@ -23,10 +24,11 @@ export function Header() {
           <Image
             src="/logo.png"
             alt="Bisket Labs"
-            width={200}
-            height={30}
+            width={242}
+            height={36}
+            sizes="242px"
             className="h-8 w-auto md:h-9"
-            priority
+            loading="eager"
           />
         </Link>
 
@@ -40,7 +42,7 @@ export function Header() {
                 className={`text-sm font-medium tracking-wide transition-colors ${
                   active
                     ? "text-forest"
-                    : "text-forest/65 hover:text-forest"
+                    : "text-forest/80 hover:text-forest"
                 }`}
               >
                 {link.label}
@@ -54,11 +56,11 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden flex-col items-end text-right text-[11px] leading-tight text-forest/70 lg:flex">
-          <a href="mailto:founder@bisketlabs.com" className="hover:text-purple">
+        <div className="hidden items-center gap-4 text-[11px] leading-tight text-forest/80 lg:flex">
+          <a href="mailto:founder@bisketlabs.com" className="inline-flex min-h-6 items-center hover:text-purple">
             founder@bisketlabs.com
           </a>
-          <a href="tel:+918884888454" className="hover:text-purple">
+          <a href="tel:+918884888454" className="inline-flex min-h-6 items-center hover:text-purple">
             +91 88848 88454
           </a>
         </div>
