@@ -56,13 +56,18 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-4 text-[11px] leading-tight text-forest/80 lg:flex">
+        <div className="hidden flex-col items-end text-[11px] leading-tight text-forest/80 lg:flex">
           <a href="mailto:founder@bisketlabs.com" className="inline-flex min-h-6 items-center hover:text-purple">
             founder@bisketlabs.com
           </a>
-          <a href="tel:+918884888454" className="inline-flex min-h-6 items-center hover:text-purple">
-            +91 88848 88454
-          </a>
+          <div className="flex gap-3">
+            <a href="tel:+918884888454" className="inline-flex min-h-6 items-center hover:text-purple">
+              +91 88848 88454
+            </a>
+            <a href="tel:+919453981393" className="inline-flex min-h-6 items-center hover:text-purple">
+              +91 94539 81393
+            </a>
+          </div>
         </div>
 
         <button
@@ -103,6 +108,7 @@ export function Header() {
           <div className="mt-6 flex flex-col gap-1 text-sm text-forest/70">
             <a href="mailto:founder@bisketlabs.com">founder@bisketlabs.com</a>
             <a href="tel:+918884888454">+91 88848 88454</a>
+            <a href="tel:+919453981393">+91 94539 81393</a>
           </div>
         </div>
       ) : null}

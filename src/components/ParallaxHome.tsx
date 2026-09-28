@@ -109,11 +109,21 @@ function Hero({ reduce }: { reduce: boolean }) {
           <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight text-beige md:text-5xl lg:text-6xl">
             A next-generation FR-4 alternative.
           </h1>
-          <p className="mt-5 max-w-md text-base font-light leading-relaxed text-beige/80 md:text-lg">
-            Bio-based laminate for circular electronics manufacturing, made from crop
-            residue. Designed to run on existing FR-4 lines with no new capex or
-            retraining, and halogen-free UL94 V-0. Founded by IIT Madras and NUS alumni.
+          <p className="mt-5 max-w-md text-base font-light leading-relaxed text-beige/85 md:text-lg">
+            A bio-based laminate made from crop residue. Designed to run on your
+            existing FR-4 line, with no new capex or retraining.
           </p>
+          <ul className="mt-5 flex flex-wrap gap-2" aria-label="Key specifications">
+            {["Halogen-free UL94 V-0", "Tg 262 °C", "Lighter than FR-4"].map((chip) => (
+              <li
+                key={chip}
+                className="border border-beige/25 px-2.5 py-1 text-xs font-medium tracking-wide text-beige/85"
+              >
+                {chip}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-xs text-beige/70">Founded by IIT Madras and NUS alumni</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/contact">Request a trial on your line</ButtonLink>
             <ButtonLink href="/fabricators" variant="secondary">
