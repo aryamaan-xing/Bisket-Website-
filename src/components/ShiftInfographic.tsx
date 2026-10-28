@@ -59,7 +59,7 @@ const icons = {
 
 const bisket: Step[] = [
   { label: "Crop residue", detail: "Rice straw, bagasse, bamboo, napier grass", icon: icons.residue },
-  { label: "Bisket laminate", detail: "Lignocellulosic bio-resin, no glass fibre", icon: icons.laminate },
+  { label: "Bisket laminate", detail: "Lignocellulosic bio-resin, 90% less glass fibre", icon: icons.laminate },
   { label: "Working PCB", detail: "Fabricated with PCB partners", icon: icons.pcb },
   { label: "Controlled end-of-life", detail: "A planned route back to nature", icon: icons.nature },
 ];
@@ -162,7 +162,7 @@ export function ShiftInfographic() {
       className="space-y-4"
       aria-labelledby="shift-infographic-caption"
     >
-      <Flow title="Bisket" tag="Bio-based · halogen-free · glass-free" steps={bisket} tone="bisket" />
+      <Flow title="Bisket" tag="Bio-based · halogen-free · 90% less glass fibre" steps={bisket} tone="bisket" />
       <Flow title="Conventional FR-4" tag="Fossil-based · glass-reinforced" steps={fr4} tone="fr4" />
       <figcaption id="shift-infographic-caption" className="sr-only">
         Comparison of two material life cycles. Bisket: crop residue becomes a bio-based laminate,

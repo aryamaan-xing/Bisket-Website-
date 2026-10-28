@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 const secondary = [
   "Made from crop residue that is otherwise often burned in the field, helping tackle stubble burning.",
-  "Halogen-free and glass-fibre-free, designed for a controlled end-of-life.",
+  "Halogen-free with about 90% less glass fibre than FR-4, designed for a controlled end-of-life.",
   "A domestic, India-based supply chain for PCB laminates.",
 ];
 
