@@ -11,7 +11,7 @@ const moments = [
   },
   {
     title: "Made to manufacture",
-    line: "Processed with PCB fabrication partners in Bengaluru and Chennai — not just in the lab.",
+    line: "Processed with PCB fabrication partners in Bengaluru and Chennai, not just in the lab.",
   },
   {
     title: "A platform, shipping single-layer first",
@@ -49,7 +49,7 @@ export default function TechnologyPage() {
             </h1>
             <p className="mt-6 max-w-xl text-base font-light leading-relaxed text-beige/75 md:text-lg">
               Our proprietary lignocellulosic resin turns
-              agricultural residue into a glass-free PCB laminate — about 84% organic by
+              agricultural residue into a PCB laminate with about 90% less glass fibre than FR-4, about 84% organic by
               volume, with a controlled end-of-life.
             </p>
           </Reveal>
@@ -73,7 +73,7 @@ export default function TechnologyPage() {
               </li>
               <li className="border-l-2 border-forest/30 pl-4">
                 <p className="font-semibold text-forest">~84% organic by volume</p>
-                <p className="mt-1 text-sm text-forest/75">Lignocellulosic resin, no glass fibre</p>
+                <p className="mt-1 text-sm text-forest/75">Lignocellulosic resin, 90% less glass fibre</p>
               </li>
             </ul>
           </Reveal>

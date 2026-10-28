@@ -12,7 +12,7 @@ const raleway = Raleway({
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bisketlabs.com";
 
-const title = "Bisket Labs — A next-generation FR-4 alternative";
+const title = "Bisket Labs | A next-generation FR-4 alternative";
 const description =
   "Bio-based PCB laminate for circular electronics manufacturing, made from crop residue. Designed to run on existing FR-4 lines; halogen-free UL94 V-0, Tg 262 °C. Founded by IIT Madras and NUS alumni.";
 
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Bisket Labs — Circuit boards, made from crop residue",
+        alt: "Bisket Labs: Circuit boards, made from crop residue",
         type: "image/png",
       },
     ],
