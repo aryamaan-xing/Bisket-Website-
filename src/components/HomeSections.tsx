@@ -6,8 +6,8 @@ const impact = [
     body: "Our resin system has been formulated and tested with rice straw, sugarcane bagasse, bamboo and napier grass: agricultural residues that are often burned or left to rot.",
   },
   {
-    title: "90% less glass fibre",
-    body: "The laminate uses about 90% less glass fibre than FR-4 and no fossil epoxy, which reduces reliance on imported glass fabric and petrochemical resins.",
+    title: "Crop-waste PCB substrate",
+    body: "The laminate is a crop-waste PCB substrate: halogen-free, biodegradable, and made from agricultural residue rather than fossil epoxy.",
   },
   {
     title: "Halogen-free, UL94 V-0",

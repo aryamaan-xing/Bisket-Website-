@@ -111,7 +111,7 @@ function Hero({ reduce }: { reduce: boolean }) {
           </h1>
           <p className="mt-5 max-w-md text-base font-light leading-relaxed text-beige/85 md:text-lg">
             A bio-based laminate made from crop residue. Designed to run on your
-            existing FR-4 line, with no new capex or retraining.
+            existing FR-4 line. Lab scale today.
           </p>
           <ul className="mt-5 flex flex-wrap gap-2" aria-label="Key specifications">
             {["Halogen-free UL94 V-0", "Tg 262 °C", "Lighter than FR-4"].map((chip) => (
@@ -228,9 +228,8 @@ function Transformation({ reduce }: { reduce: boolean }) {
           </h2>
           <p className="mt-6 max-w-md text-base leading-relaxed text-forest/70">
             Conventional FR-4 is fossil epoxy on woven glass fibre, and it has no good
-            way back. Bisket replaces both with a lignocellulosic bio-resin from
-            agricultural residue, so the board is designed for a controlled end-of-life
-            from the start.
+            way back. Bisket uses a lignocellulosic bio-resin from agricultural residue,
+            so the board is designed for a controlled end-of-life from the start.
           </p>
         </motion.div>
 
