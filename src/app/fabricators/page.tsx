@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 const secondary = [
   "Made from crop residue that is otherwise often burned in the field, helping tackle stubble burning.",
-  "Halogen-free with about 90% less glass fibre than FR-4, designed for a controlled end-of-life.",
+  "Halogen-free, biodegradable, UL94 V-0 and Tg 262 C, designed for a controlled end-of-life.",
   "A domestic, India-based supply chain for PCB laminates.",
 ];
 
@@ -46,7 +46,7 @@ export default function FabricatorsPage() {
           </h1>
           <p className="mt-6 max-w-xl text-base font-light leading-relaxed text-beige/80 md:text-lg">
             Bisket is a bio-based laminate for circular electronics manufacturing. Our
-            design goal: run on existing FR-4 lines with no new capex and no retraining.
+            design goal: run on existing FR-4 lines. Lab scale today.
             We&apos;ll show you on your own line.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">

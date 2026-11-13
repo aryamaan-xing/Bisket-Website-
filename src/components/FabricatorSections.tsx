@@ -15,7 +15,7 @@ const concerns = [
   {
     title: "Process compatibility",
     question: "Can I run this on my existing line?",
-    body: "Bisket is designed to run on existing FR-4 lines, with no new capex or retraining as the goal. In the trial we check lamination, imaging and etching, drilling and routing, and tool wear against your FR-4 baseline.",
+    body: "Bisket is designed to run on existing FR-4 lines. In the trial we check lamination, imaging and etching, drilling and routing, and tool wear against your FR-4 baseline.",
   },
   {
     title: "Yield",
